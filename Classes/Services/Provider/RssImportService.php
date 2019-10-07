@@ -68,6 +68,7 @@ class RssImportService extends AbstractImportService
     /**
      * @param SyncConfiguration $syncConfiguration
      * @return bool
+     * @throws \Fourviewture\Newssync\Services\Exception\OfflineException
      */
     public function canHandle(SyncConfiguration $syncConfiguration)
     {
@@ -78,6 +79,9 @@ class RssImportService extends AbstractImportService
 
     /**
      * @param SyncConfiguration $syncConfiguration
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
      */
     public function handle(SyncConfiguration $syncConfiguration)
     {
@@ -85,12 +89,12 @@ class RssImportService extends AbstractImportService
         GeneralUtility::mkdir_deep(self::CACHE_DIRECTORY);
         $simplePie = new \SimplePie();
         $simplePie->set_cache_location(self::CACHE_DIRECTORY);
-        $simplePie->set_cache_duration($this->emConfiguration['simplePieCacheRssTime']['value']);
+        $simplePie->set_cache_duration($this->emConfiguration['simplePieCacheRssTime']);
         $simplePie->set_feed_url($syncConfiguration->getUri());
 
         $this->log('  URL:   ' . $syncConfiguration->getUri());
         $this->log('  Cache: ' . self::CACHE_DIRECTORY);
-        $this->log('  Cache: ' . $this->emConfiguration['simplePieCacheRssTime']['value']);
+        $this->log('  Cache: ' . $this->emConfiguration['simplePieCacheRssTime']);
 
             $simplePie->init();
         $items = $simplePie->get_items();
@@ -152,6 +156,7 @@ class RssImportService extends AbstractImportService
     /**
      * @param News $news
      * @param $uri
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
      */
     protected function addFile(News $news, $uri) {
         $filename = basename(parse_url($uri, PHP_URL_PATH));
