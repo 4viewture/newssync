@@ -11,27 +11,27 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Newssync',
-	'description' => 'Sync News',
-	'category' => 'plugin',
-	'author' => 'Kay Strobach',
-	'author_email' => 'typo3@kay-strobach.de',
-	'state' => 'alpha',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'clearCacheOnLoad' => 0,
-	'version' => '9.4.1',
-	'constraints' => array(
-		'depends' => array(
-			'typo3' => '7.6.17-8.7.99',
+    'title' => 'Newssync',
+    'description' => 'Sync News',
+    'category' => 'plugin',
+    'author' => 'Kay Strobach',
+    'author_email' => 'typo3@kay-strobach.de',
+    'state' => 'alpha',
+    'internal' => '',
+    'uploadfolder' => '0',
+    'createDirs' => '',
+    'clearCacheOnLoad' => 0,
+    'version' => '9.4.1',
+    'constraints' => array(
+        'depends' => array(
+            'typo3' => '7.6.17-8.7.99',
             'news' => '5.3.0-5.3.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
+        ),
+        'conflicts' => array(
+        ),
+        'suggests' => array(
+        ),
+    ),
     'autoload' => array(
         'psr-4' => array(
             'Fourviewture\\Newssync\\' => 'Classes/'

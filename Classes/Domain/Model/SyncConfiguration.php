@@ -5,6 +5,7 @@ namespace Fourviewture\Newssync\Domain\Model;
 use Fourviewture\Newssync\Services\Exception\OfflineException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -460,7 +461,8 @@ class SyncConfiguration extends AbstractEntity
      * @param \GeorgRinger\News\Domain\Model\Category $category
      * @return void
      */
-    public function addCategory(\GeorgRinger\News\Domain\Model\Category $category) {
+    public function addCategory(\GeorgRinger\News\Domain\Model\Category $category)
+    {
         $this->categories->attach($category);
     }
 
@@ -470,7 +472,8 @@ class SyncConfiguration extends AbstractEntity
      * @param \GeorgRinger\News\Domain\Model\Category $categoryToRemove The Category to be removed
      * @return void
      */
-    public function removeCategory(\GeorgRinger\News\Domain\Model\Category $categoryToRemove) {
+    public function removeCategory(\GeorgRinger\News\Domain\Model\Category $categoryToRemove)
+    {
         $this->categories->detach($categoryToRemove);
     }
 
@@ -479,7 +482,8 @@ class SyncConfiguration extends AbstractEntity
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->categories;
     }
 
@@ -489,7 +493,8 @@ class SyncConfiguration extends AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
      * @return void
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories) {
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    {
         $this->categories = $categories;
     }
 }

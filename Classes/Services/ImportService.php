@@ -39,7 +39,8 @@ class ImportService
         }
     }
 
-    public function import(SyncConfiguration &$syncConfiguration) {
+    public function import(SyncConfiguration &$syncConfiguration)
+    {
         if (count($this->services) === 0) {
             $syncConfiguration->setLastsynclog('No Importservices defined (' . count($this->services) . ')');
         }
@@ -47,7 +48,7 @@ class ImportService
         $syncConfiguration->setLastsync(new \DateTime('now'));
         /** @var AbstractImportService $service */
         $handled = false;
-        foreach($this->services as $service) {
+        foreach ($this->services as $service) {
             try {
                 if ($service->canHandle($syncConfiguration)) {
                     $service->handle($syncConfiguration);
@@ -63,5 +64,4 @@ class ImportService
             $syncConfiguration->setLastsynclog('No Matching service found');
         }
     }
-
 }

@@ -2,6 +2,7 @@
 namespace Fourviewture\Newssync\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -112,5 +113,4 @@ class Page extends AbstractEntity
     {
         $this->doktype = $doktype;
     }
-
 }

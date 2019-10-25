@@ -2,7 +2,6 @@
 
 namespace Fourviewture\Newssync\Services\Provider;
 
-
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -19,14 +18,16 @@ class AbstractImportService
      * @param SyncConfiguration $syncConfiguration
      * @return boolean
      */
-    public function canHandle(SyncConfiguration $syncConfiguration) {
+    public function canHandle(SyncConfiguration $syncConfiguration)
+    {
         return false;
     }
 
     /**
      * @param SyncConfiguration $syncConfiguration
      */
-    public function handle(SyncConfiguration $syncConfiguration) {
+    public function handle(SyncConfiguration $syncConfiguration)
+    {
         $this->output = array();
         $this->log('Importing with ' . get_class($this));
     }
@@ -34,14 +35,16 @@ class AbstractImportService
     /**
      * @param $message
      */
-    public function log($message) {
+    public function log($message)
+    {
         $this->output[] = $message;
     }
 
     /**
      * @return string
      */
-    public function getLog() {
+    public function getLog()
+    {
         return implode(chr(10), $this->output);
     }
 

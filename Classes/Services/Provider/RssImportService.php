@@ -96,12 +96,12 @@ class RssImportService extends AbstractImportService
         $this->log('  Cache: ' . self::CACHE_DIRECTORY);
         $this->log('  Cache: ' . $this->emConfiguration['simplePieCacheRssTime']);
 
-            $simplePie->init();
+        $simplePie->init();
         $items = $simplePie->get_items();
 
         /** @var \SimplePie_Item $item */
         /** @var  News $news */
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $new = false;
             $syncKey = $syncConfiguration->getUid() . ':' . md5($item->get_link());
             $news = $this->newsRepository->findOneByImportSourceAndImportId(
@@ -158,7 +158,8 @@ class RssImportService extends AbstractImportService
      * @param $uri
      * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
      */
-    protected function addFile(News $news, $uri) {
+    protected function addFile(News $news, $uri)
+    {
         $filename = basename(parse_url($uri, PHP_URL_PATH));
 
         $resourceFactory = ResourceFactory::getInstance();
@@ -199,8 +200,10 @@ class RssImportService extends AbstractImportService
         if (count($files)) {
             foreach ($files as $fileInfo) {
                 if ($fileInfo['storage'] > 0) {
-                    $file = ResourceFactory::getInstance()->getFileObjectByStorageAndIdentifier($fileInfo['storage'],
-                        $fileInfo['identifier']);
+                    $file = ResourceFactory::getInstance()->getFileObjectByStorageAndIdentifier(
+                        $fileInfo['storage'],
+                        $fileInfo['identifier']
+                    );
                     break;
                 }
             }

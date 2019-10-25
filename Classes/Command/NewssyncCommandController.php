@@ -2,7 +2,6 @@
 
 namespace Fourviewture\Newssync\Command;
 
-
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
@@ -14,7 +13,7 @@ class NewssyncCommandController extends CommandController
      * @var \Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository
      * @inject
      */
-    protected $syncConfigurationRepository = NULL;
+    protected $syncConfigurationRepository = null;
 
     /**
      * @var \Fourviewture\Newssync\Services\ImportService
@@ -30,7 +29,7 @@ class NewssyncCommandController extends CommandController
         $syncConfigurations = $this->syncConfigurationRepository->findAll();
 
         /** @var SyncConfiguration $syncConfiguration */
-        foreach($syncConfigurations as $syncConfiguration) {
+        foreach ($syncConfigurations as $syncConfiguration) {
             $this->outputLine('--------------------------------------------------------------------------------');
             $this->outputLine('Starting: ' . $syncConfiguration->getTitle());
             $this->importService->import($syncConfiguration);

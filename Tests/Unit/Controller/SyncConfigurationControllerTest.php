@@ -1,10 +1,11 @@
 <?php
 namespace Fourviewture\Newssync\Tests\Unit\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2016 Kay Strobach <typo3@kay-strobach.de>
- *  			
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,51 +33,50 @@ namespace Fourviewture\Newssync\Tests\Unit\Controller;
 class SyncConfigurationControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
 
-	/**
-	 * @var \Fourviewture\Newssync\Controller\SyncConfigurationController
-	 */
-	protected $subject = NULL;
+    /**
+     * @var \Fourviewture\Newssync\Controller\SyncConfigurationController
+     */
+    protected $subject = null;
 
-	public function setUp()
-	{
-		$this->subject = $this->getMock('Fourviewture\\Newssync\\Controller\\SyncConfigurationController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
-	}
+    public function setUp()
+    {
+        $this->subject = $this->getMock('Fourviewture\\Newssync\\Controller\\SyncConfigurationController', array('redirect', 'forward', 'addFlashMessage'), array(), '', false);
+    }
 
-	public function tearDown()
-	{
-		unset($this->subject);
-	}
+    public function tearDown()
+    {
+        unset($this->subject);
+    }
 
-	/**
-	 * @test
-	 */
-	public function listActionFetchesAllSyncConfigurationsFromRepositoryAndAssignsThemToView()
-	{
+    /**
+     * @test
+     */
+    public function listActionFetchesAllSyncConfigurationsFromRepositoryAndAssignsThemToView()
+    {
+        $allSyncConfigurations = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', false);
 
-		$allSyncConfigurations = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+        $syncConfigurationRepository = $this->getMock('Fourviewture\\Newssync\\Domain\\Repository\\SyncConfigurationRepository', array('findAll'), array(), '', false);
+        $syncConfigurationRepository->expects($this->once())->method('findAll')->will($this->returnValue($allSyncConfigurations));
+        $this->inject($this->subject, 'syncConfigurationRepository', $syncConfigurationRepository);
 
-		$syncConfigurationRepository = $this->getMock('Fourviewture\\Newssync\\Domain\\Repository\\SyncConfigurationRepository', array('findAll'), array(), '', FALSE);
-		$syncConfigurationRepository->expects($this->once())->method('findAll')->will($this->returnValue($allSyncConfigurations));
-		$this->inject($this->subject, 'syncConfigurationRepository', $syncConfigurationRepository);
+        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $view->expects($this->once())->method('assign')->with('syncConfigurations', $allSyncConfigurations);
+        $this->inject($this->subject, 'view', $view);
 
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$view->expects($this->once())->method('assign')->with('syncConfigurations', $allSyncConfigurations);
-		$this->inject($this->subject, 'view', $view);
+        $this->subject->listAction();
+    }
 
-		$this->subject->listAction();
-	}
+    /**
+     * @test
+     */
+    public function showActionAssignsTheGivenSyncConfigurationToView()
+    {
+        $syncConfiguration = new \Fourviewture\Newssync\Domain\Model\SyncConfiguration();
 
-	/**
-	 * @test
-	 */
-	public function showActionAssignsTheGivenSyncConfigurationToView()
-	{
-		$syncConfiguration = new \Fourviewture\Newssync\Domain\Model\SyncConfiguration();
+        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $this->inject($this->subject, 'view', $view);
+        $view->expects($this->once())->method('assign')->with('syncConfiguration', $syncConfiguration);
 
-		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
-		$this->inject($this->subject, 'view', $view);
-		$view->expects($this->once())->method('assign')->with('syncConfiguration', $syncConfiguration);
-
-		$this->subject->showAction($syncConfiguration);
-	}
+        $this->subject->showAction($syncConfiguration);
+    }
 }

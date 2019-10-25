@@ -3,6 +3,7 @@ namespace Fourviewture\Newssync\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -33,7 +34,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class SyncConfigurationRepository extends Repository
 {
-
     public function initializeObject()
     {
         $querySettings = $this->getQuerySettings();
@@ -48,5 +48,4 @@ class SyncConfigurationRepository extends Repository
     {
         return $this->objectManager->get(QuerySettingsInterface::class);
     }
-
 }

@@ -47,7 +47,7 @@ class SyncConfigurationController extends ActionController
      * @var \Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository
      * @inject
      */
-    protected $syncConfigurationRepository = NULL;
+    protected $syncConfigurationRepository = null;
 
     /**
      * @var \Fourviewture\Newssync\Services\ImportService

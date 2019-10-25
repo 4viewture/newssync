@@ -1,29 +1,28 @@
 <?php
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
 if (TYPO3_MODE === 'BE') {
 
-	/**
-	 * Registers a Backend Module
-	 */
-	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-		'Fourviewture.' . $_EXTKEY,
-		'site',	 // Make module a submodule of 'tools'
-		'sync',	// Submodule key
-		'',						// Position
-		array(
-			'SyncConfiguration' => 'list, show, refreshData',
+    /**
+     * Registers a Backend Module
+     */
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        'Fourviewture.' . $_EXTKEY,
+        'site',	 // Make module a submodule of 'tools'
+        'sync',	// Submodule key
+        '',						// Position
+        array(
+            'SyncConfiguration' => 'list, show, refreshData',
 
-		),
-		array(
-			'access' => 'user,group',
-			'icon'   => 'EXT:' . $_EXTKEY . '/Resources/Public/Icons/module_syncconfiguration.svg',
-			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_sync.xlf',
-		)
-	);
-
+        ),
+        array(
+            'access' => 'user,group',
+            'icon'   => 'EXT:' . $_EXTKEY . '/Resources/Public/Icons/module_syncconfiguration.svg',
+            'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_sync.xlf',
+        )
+    );
 }
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Newssync');

@@ -17,7 +17,6 @@ class T3libTcemainHook
      */
     public function clearCachePostProc(array $params, DataHandler &$pObj)
     {
-
         GeneralUtility::rmdir(
             self::CACHE_DIRECTORY,
             true
