@@ -7,9 +7,7 @@ return array(
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
-        'versioningWS' => 2,
-        'versioning_followPages' => true,
-
+        'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -85,34 +83,38 @@ return array(
         ),
         'starttime' => array(
             'exclude' => 1,
-            'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => array(
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
-                'max' => 20,
                 'eval' => 'datetime',
                 'checkbox' => 0,
                 'default' => 0,
                 'range' => array(
                     'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
                 ),
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ]
             ),
         ),
         'endtime' => array(
             'exclude' => 1,
-            'l10n_mode' => 'mergeIfNotBlank',
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => array(
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
-                'max' => 20,
                 'eval' => 'datetime',
                 'checkbox' => 0,
                 'default' => 0,
                 'range' => array(
                     'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
                 ),
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ]
             ),
         ),
 
@@ -159,6 +161,7 @@ return array(
             'config' => array(
                 'dbType' => 'datetime',
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 12,
                 'eval' => 'datetime',
                 'checkbox' => 0,
@@ -222,32 +225,24 @@ return array(
                 'autoSizeMax' => 30,
                 'maxitems' => 9999,
                 'multiple' => 0,
+                'fieldControl' => [
+                    'addRecord' => [
+                        'options' => [
+                            'pid' => '###CURRENT_PID###',
+                            'setValue' => 'prepend',
+                            'table' => 'pages',
+                            'title' => 'Create new'
+                        ]
+                    ],
+                    'editPopup' => [
+                        'title' => 'Edit',
+                        'windowOpenParameters' => 'height=350,width=580,status=0,menubar=0,scrollbars=1'
+                    ]
+                ],
                 'wizards' => array(
                     '_PADDING' => 1,
                     '_VERTICAL' => 1,
-                    'edit' => array(
-                        'module' => array(
-                            'name' => 'wizard_edit',
-                        ),
-                        'type' => 'popup',
-                        'title' => 'Edit',
-                        'icon' => 'edit2.gif',
-                        'popup_onlyOpenIfSelected' => 1,
-                        'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-                        ),
-                    'add' => array(
-                        'module' => array(
-                            'name' => 'wizard_add',
-                        ),
-                        'type' => 'script',
-                        'title' => 'Create new',
-                        'icon' => 'add.gif',
-                        'params' => array(
-                            'table' => 'pages',
-                            'pid' => '###CURRENT_PID###',
-                            'setValue' => 'prepend'
-                        ),
-                    ),
+
                 ),
             ),
         ),
