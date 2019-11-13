@@ -25,13 +25,6 @@ if (TYPO3_MODE === 'BE') {
     );
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Newssync');
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_newssync_domain_model_syncconfiguration', 'EXT:newssync/Resources/Private/Language/locallang_csh_tx_newssync_domain_model_syncconfiguration.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_newssync_domain_model_syncconfiguration');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-    $_EXTKEY,
-    'tx_newssync_domain_model_syncconfiguration'
-);
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
