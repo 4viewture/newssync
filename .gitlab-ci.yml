@@ -23,34 +23,6 @@ stages:
   - test
   - deploy
 
-# Unit Tests in PHP 5.6 and TYPO3 7.6
-unittest-php56-7:
-  <<: *unit_test
-  variables:
-    DOCKER_TAG: debian-8
-    TYPO3_VERSION: ^7.6
-
-# Unit Tests in PHP 7.0 and TYPO3 7.6
-unittest-php7-7:
-  <<: *unit_test
-  variables:
-    DOCKER_TAG: debian-9
-    TYPO3_VERSION: ^7.6
-
-# Unit Tests in PHP 7.0 and TYPO3 8 (latest stable release)
-unittest-php7-8:
-  <<: *unit_test
-  variables:
-    DOCKER_TAG: debian-9
-    TYPO3_VERSION: ^8
-
-# Unit Tests in PHP 7.0 and TYPO3 (current master)
-unittest-php7-master:
-  <<: *unit_test
-  variables:
-    DOCKER_TAG: debian-9
-    TYPO3_VERSION: dev-master
-
 # TER Upload when tagging in master branch
 # The variables T3O_USERNAME and T3O_PASSWORD should be set in GitLab
 ter-upload:
