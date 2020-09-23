@@ -1,3 +1,11 @@
+stages:
+  - test
+  - deploy
+  - build
+
+include:
+  - template: Composer.gitlab-ci.yml
+
 # Template for unit tests for better reuse
 .job_template: &unit_test
   image: webdevops/php:$DOCKER_TAG
@@ -18,10 +26,6 @@
 cache:
   paths:
     - cache/
-
-stages:
-  - test
-  - deploy
 
 # TER Upload when tagging in master branch
 # The variables T3O_USERNAME and T3O_PASSWORD should be set in GitLab
