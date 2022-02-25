@@ -13,7 +13,6 @@ class AbstractImportService
      * @var array
      */
     protected $output = array();
-
     /**
      * @param SyncConfiguration $syncConfiguration
      * @return boolean
@@ -22,7 +21,6 @@ class AbstractImportService
     {
         return false;
     }
-
     /**
      * @param SyncConfiguration $syncConfiguration
      */
@@ -31,7 +29,6 @@ class AbstractImportService
         $this->output = array();
         $this->log('Importing with ' . get_class($this));
     }
-
     /**
      * @param $message
      */
@@ -39,7 +36,6 @@ class AbstractImportService
     {
         $this->output[] = $message;
     }
-
     /**
      * @return string
      */
@@ -47,13 +43,12 @@ class AbstractImportService
     {
         return implode(chr(10), $this->output);
     }
-
     /**
      * @param int $uid of storage folder
      */
     protected function clearCache($uid)
     {
-        $pagets = \TYPO3\CMS\Backend\Utility\BackendUtility::getPagesTSconfig($uid);
+        $pagets = BackendUtility::getPagesTSconfig($uid);
         if (isset($pagets['TCEMAIN.']['clearCacheCmd'])) {
             $this->log('    found TCEMAIN.clearCacheCmd=' . $pagets['TCEMAIN.']['clearCacheCmd']);
             /** @var CacheService $cacheService */
@@ -63,7 +58,6 @@ class AbstractImportService
             $this->log('    found no TCEMAIN.clearCacheCmd, so cache is not cleared');
         }
     }
-
     /**
      * @return ObjectManager
      */

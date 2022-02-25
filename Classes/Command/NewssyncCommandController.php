@@ -14,20 +14,17 @@ class NewssyncCommandController extends CommandController
      * @inject
      */
     protected $syncConfigurationRepository = null;
-
     /**
      * @var \Fourviewture\Newssync\Services\ImportService
      * @inject
      */
     protected $importService;
-
     /**
      *
      */
     public function syncAllCommand()
     {
         $syncConfigurations = $this->syncConfigurationRepository->findAll();
-
         /** @var SyncConfiguration $syncConfiguration */
         foreach ($syncConfigurations as $syncConfiguration) {
             $this->outputLine('--------------------------------------------------------------------------------');

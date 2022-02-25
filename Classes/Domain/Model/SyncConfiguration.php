@@ -30,103 +30,88 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * SynConfiguration
  */
 class SyncConfiguration extends AbstractEntity
 {
-
     /**
      * @transient
      * @var string
      */
     protected $transmissionBuffer = null;
-
     /**
      * title
      *
      * @var string
      */
     protected $title = '';
-
     /**
      * uri
      *
      * @var string
      */
     protected $uri = '';
-
     /**
      * description
      *
      * @var string
      */
     protected $description = '';
-
     /**
      * processingfolder
      *
      * @var string
      */
     protected $processingfolder = '';
-
     /**
      * lastsync
      *
      * @var \DateTime
      */
     protected $lastsync = null;
-
     /**
      * lastsynclog
      *
      * @var string
      */
     protected $lastsynclog = '';
-
     /**
      * autoClearCacheForPlugin
      *
      * @var bool
      */
     protected $autoClearCacheForPlugin = false;
-
     /**
      * storagePid
      *
      * @var int
      */
     protected $storagePid = null;
-
     /**
      * clearCachePages
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Fourviewture\Newssync\Domain\Model\Page>
      */
     protected $clearCachePages = null;
-
     /**
      * newsIsHiddenAfterImport
      *
      * @var bool
      */
     protected $newsIsHiddenAfterImport = false;
-
     /**
      * newsIsTopNews
      *
      * @var bool
      */
     protected $newsIsTopNews = false;
-
     /**
      * Categories
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model\Category>
      */
     protected $categories;
-
     /**
      * Returns the title
      *
@@ -136,7 +121,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->title;
     }
-
     /**
      * Sets the title
      *
@@ -147,7 +131,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->title = $title;
     }
-
     /**
      * Returns the uri
      *
@@ -157,7 +140,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->uri;
     }
-
     /**
      * Sets the uri
      *
@@ -168,7 +150,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->uri = $uri;
     }
-
     /**
      * Returns the description
      *
@@ -178,7 +159,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->description;
     }
-
     /**
      * Sets the description
      *
@@ -189,7 +169,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->description = $description;
     }
-
     /**
      * Returns the lastsync
      *
@@ -199,7 +178,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->lastsync;
     }
-
     /**
      * Sets the lastsync
      *
@@ -210,7 +188,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->lastsync = $lastsync;
     }
-
     /**
      * Returns the processingfolder
      *
@@ -220,7 +197,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->processingfolder;
     }
-
     /**
      * Sets the processingfolder
      *
@@ -231,7 +207,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->processingfolder = $processingfolder;
     }
-
     /**
      * Returns the lastsynclog
      *
@@ -241,7 +216,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->lastsynclog;
     }
-
     /**
      * Sets the lastsynclog
      *
@@ -252,7 +226,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->lastsynclog = $lastsynclog;
     }
-
     /**
      * __construct
      */
@@ -261,7 +234,6 @@ class SyncConfiguration extends AbstractEntity
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
-
     /**
      * Initializes all ObjectStorage properties
      * Do not modify this method!
@@ -272,31 +244,28 @@ class SyncConfiguration extends AbstractEntity
      */
     protected function initStorageObjects()
     {
-        $this->clearCachePages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->clearCachePages = new ObjectStorage();
     }
-
     /**
      * Adds a Page
      *
      * @param \Fourviewture\Newssync\Domain\Model\Page $clearCachePage
      * @return void
      */
-    public function addClearCachePage(\Fourviewture\Newssync\Domain\Model\Page $clearCachePage)
+    public function addClearCachePage(Page $clearCachePage)
     {
         $this->clearCachePages->attach($clearCachePage);
     }
-
     /**
      * Removes a Page
      *
      * @param \Fourviewture\Newssync\Domain\Model\Page $clearCachePageToRemove The Page to be removed
      * @return void
      */
-    public function removeClearCachePage(\Fourviewture\Newssync\Domain\Model\Page $clearCachePageToRemove)
+    public function removeClearCachePage(Page $clearCachePageToRemove)
     {
         $this->clearCachePages->detach($clearCachePageToRemove);
     }
-
     /**
      * Returns the clearCachePages
      *
@@ -306,18 +275,16 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->clearCachePages;
     }
-
     /**
      * Sets the clearCachePages
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Fourviewture\Newssync\Domain\Model\Page> $clearCachePages
      * @return void
      */
-    public function setClearCachePages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $clearCachePages)
+    public function setClearCachePages(ObjectStorage $clearCachePages)
     {
         $this->clearCachePages = $clearCachePages;
     }
-
     /**
      * Returns the storagePid
      *
@@ -327,7 +294,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->storagePid;
     }
-
     /**
      * Sets the storagePid
      *
@@ -338,7 +304,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->storagePid = $storagePid;
     }
-
     /**
      * Returns the autoClearCacheForPlugin
      *
@@ -348,7 +313,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->autoClearCacheForPlugin;
     }
-
     /**
      * Sets the autoClearCacheForPlugin
      *
@@ -359,7 +323,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->autoClearCacheForPlugin = $autoClearCacheForPlugin;
     }
-
     /**
      * Returns the boolean state of autoClearCacheForPlugin
      *
@@ -369,7 +332,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->autoClearCacheForPlugin;
     }
-
     /**
      * @throws OfflineException
      * @return mixed
@@ -380,19 +342,13 @@ class SyncConfiguration extends AbstractEntity
             return $this->transmissionBuffer;
         }
         $report = null;
-        $content = GeneralUtility::getUrl(
-            $this->getUri(),
-            0,
-            false,
-            $report
-        );
+        $content = GeneralUtility::getUrl($this->getUri(), 0, false, $report);
         if ($content === false) {
             throw new OfflineException($this->uri . ' seems to be offline');
         }
         $this->transmissionBuffer = $content;
         return $content;
     }
-
     /**
      * Returns the newsIsHiddenAfterImport
      *
@@ -402,7 +358,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->newsIsHiddenAfterImport;
     }
-
     /**
      * Sets the newsIsHiddenAfterImport
      *
@@ -413,7 +368,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->newsIsHiddenAfterImport = $newsIsHiddenAfterImport;
     }
-
     /**
      * Returns the boolean state of newsIsHiddenAfterImport
      *
@@ -423,7 +377,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->newsIsHiddenAfterImport;
     }
-
     /**
      * Returns the newsIsTopNews
      *
@@ -433,7 +386,6 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->newsIsTopNews;
     }
-
     /**
      * Sets the newsIsTopNews
      *
@@ -444,7 +396,6 @@ class SyncConfiguration extends AbstractEntity
     {
         $this->newsIsTopNews = $newsIsTopNews;
     }
-
     /**
      * Returns the boolean state of newsIsTopNews
      *
@@ -454,29 +405,26 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->newsIsTopNews;
     }
-
     /**
      * Adds a Category
      *
      * @param \GeorgRinger\News\Domain\Model\Category $category
      * @return void
      */
-    public function addCategory(\GeorgRinger\News\Domain\Model\Category $category)
+    public function addCategory(Category $category)
     {
         $this->categories->attach($category);
     }
-
     /**
      * Removes a Category
      *
      * @param \GeorgRinger\News\Domain\Model\Category $categoryToRemove The Category to be removed
      * @return void
      */
-    public function removeCategory(\GeorgRinger\News\Domain\Model\Category $categoryToRemove)
+    public function removeCategory(Category $categoryToRemove)
     {
         $this->categories->detach($categoryToRemove);
     }
-
     /**
      * Returns the categories
      *
@@ -486,14 +434,13 @@ class SyncConfiguration extends AbstractEntity
     {
         return $this->categories;
     }
-
     /**
      * Sets the categories
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
      * @return void
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }

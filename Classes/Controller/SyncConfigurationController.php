@@ -34,13 +34,11 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * SyncConfigurationController
  */
 class SyncConfigurationController extends ActionController
 {
-
     /**
      * syncConfigurationRepository
      *
@@ -48,13 +46,11 @@ class SyncConfigurationController extends ActionController
      * @inject
      */
     protected $syncConfigurationRepository = null;
-
     /**
      * @var \Fourviewture\Newssync\Services\ImportService
      * @inject
      */
     protected $importService;
-
     /**
      * action list
      *
@@ -65,7 +61,6 @@ class SyncConfigurationController extends ActionController
         $synConfigurations = $this->syncConfigurationRepository->findAll();
         $this->view->assign('syncConfigurations', $synConfigurations);
     }
-
     /**
      * action show
      *
@@ -76,7 +71,6 @@ class SyncConfigurationController extends ActionController
     {
         $this->view->assign('syncConfiguration', $syncConfiguration);
     }
-
     /**
      * action refreshData
      *
@@ -95,7 +89,6 @@ class SyncConfigurationController extends ActionController
             $syncConfiguration->setLastsync(new \DateTime('now'));
             $syncConfiguration->setLastsynclog($e->getMessage() . PHP_EOL . $e->getTraceAsString());
         }
-
         $this->syncConfigurationRepository->update($syncConfiguration);
         $this->addFlashMessage('Refreshed: ' . $syncConfiguration->getTitle());
         $this->redirect('list');
