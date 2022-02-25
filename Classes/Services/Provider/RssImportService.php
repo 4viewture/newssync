@@ -7,6 +7,7 @@ use GeorgRinger\News\Domain\Model\FileReference;
 use GeorgRinger\News\Domain\Model\News;
 use GeorgRinger\News\Domain\Repository\NewsRepository;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
@@ -19,7 +20,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class RssImportService extends AbstractImportService
 {
     const IMPORTID = 'newssync_rssimport';
-    const CACHE_DIRECTORY = Environment::getPublicPath() . '/' . 'typo3temp/Cache/Data/newssync/SimplePie';
+    const CACHE_DIRECTORY = PATH_site . '/' . 'typo3temp/Cache/Data/newssync/SimplePie';
     /**
      * @var NewsRepository
      */

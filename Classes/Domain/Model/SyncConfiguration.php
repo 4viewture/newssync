@@ -4,7 +4,9 @@ namespace Fourviewture\Newssync\Domain\Model;
 
 use Fourviewture\Newssync\Services\Exception\OfflineException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /***************************************************************
  *
