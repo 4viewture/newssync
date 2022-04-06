@@ -43,5 +43,6 @@
             "cms-package-dir": "{$vendor-dir}\/typo3\/cms",
             "web-dir": ".Build\/Web"
         }
-    }
+    },
+    "version": "9.12.0"
 }
