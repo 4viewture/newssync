@@ -9,7 +9,7 @@ if (TYPO3_MODE === 'BE') {
      * Registers a Backend Module
      */
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'Fourviewture.lightroom',
+        'Fourviewture.newssync',
         'site',	 // Make module a submodule of 'tools'
         'sync',	// Submodule key
         '',						// Position
@@ -19,8 +19,8 @@ if (TYPO3_MODE === 'BE') {
         ),
         array(
             'access' => 'user,group',
-            'icon'   => 'EXT:lightroom/Resources/Public/Icons/module_syncconfiguration.svg',
-            'labels' => 'LLL:EXT:lightroom/Resources/Private/Language/locallang_sync.xlf',
+            'icon'   => 'EXT:newssync/Resources/Public/Icons/module_syncconfiguration.svg',
+            'labels' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_sync.xlf',
         )
     );
 }
