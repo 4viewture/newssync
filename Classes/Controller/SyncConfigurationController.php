@@ -9,6 +9,7 @@ use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /***************************************************************
  *
@@ -43,12 +44,12 @@ class SyncConfigurationController extends ActionController
      * syncConfigurationRepository
      *
      * @var \Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository
-     * @inject
+     * @Extbase\Inject
      */
     protected $syncConfigurationRepository = null;
     /**
      * @var \Fourviewture\Newssync\Services\ImportService
-     * @inject
+     * @Extbase\Inject
      */
     protected $importService;
     /**
