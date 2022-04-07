@@ -182,5 +182,7 @@ return [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_newssync_domain_model_syncconfiguration');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable($_EXTKEY,
-    'tx_newssync_domain_model_syncconfiguration');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+    'newssync',
+    'tx_newssync_domain_model_syncconfiguration'
+);

@@ -10,7 +10,7 @@
  * "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF['lightroom'] = array(
     'title' => 'Newssync',
     'description' => 'Sync News',
     'category' => 'plugin',
