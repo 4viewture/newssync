@@ -2,7 +2,7 @@
     "name": "kaystrobach\/newssync",
     "type": "typo3-cms-extension",
     "description": "Allows to get news from one installation to another one",
-    "homepage": "https:\/\/www.4viewture.com",
+    "homepage": "https:\/\/www.4viewture.de",
     "license": [
         "GPL-2.0+"
     ],
@@ -13,8 +13,8 @@
     "authors": [
         {
             "name": "Kay Strobach",
-            "email": "ks@4viewture.eu",
-            "homepage": "https:\/\/www.4viewture.eu",
+            "email": "drk-service@support.4viewture.de",
+            "homepage": "https:\/\/www.4viewture.de",
             "role": "Developer"
         }
     ],
