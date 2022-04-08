@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-12-08T21:38:20Z" product-name="newssync">
+		<header/>
+		<body>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration">
+				<source>Sync Configuration</source>
+				<target>Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.uri">
+				<source>Uri</source>
+				<target>Uri</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.description">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.processingfolder">
+				<source>Processingfolder</source>
+				<target>Ordner für Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.lastsync">
+				<source>Lastsync</source>
+				<target>Letzte Synchronisation</target>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.lastsynclog">
+				<source>Lastsynclog</source>
+				<target>Log der letzten Synchronisation</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

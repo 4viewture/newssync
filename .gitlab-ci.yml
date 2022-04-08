@@ -1,0 +1,53 @@
+stages:
+  - test
+  - deploy
+  - build
+
+include:
+  - template: Composer.gitlab-ci.yml
+
+# Template for unit tests for better reuse
+.job_template: &unit_test
+  image: webdevops/php:$DOCKER_TAG
+  only:
+    - branches
+  stage: test
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - export COMPOSER_CACHE_DIR=/cache/composer
+  script:
+    - composer require typo3/cms="${TYPO3_VERSION}"
+    - export TYPO3_PATH_WEB="$PWD/.Build/Web"
+    - find .Build/Tests -type f
+    - .Build/bin/phpunit -c .Build/Tests/UnitTests.xml
+  tags:
+    - docker
+
+cache:
+  paths:
+    - cache/
+
+# TER Upload when tagging in master branch
+# The variables T3O_USERNAME and T3O_PASSWORD should be set in GitLab
+ter-upload:
+  image: webdevops/php:debian-9
+  stage: deploy
+  only:
+    - tags
+    - master
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - export COMPOSER_CACHE_DIR=/cache/composer
+  script:
+    - export TYPO3_PATH_WEB="$PWD/.Build/Web"
+    - >
+      if [ -n "$CI_BUILD_TAG" ] && [ -n "$T3O_USERNAME" ] && [ -n "$T3O_PASSWORD" ]; then
+        composer install
+        echo -e "Preparing upload of release ${CI_BUILD_TAG} to TER\n"
+        # Cleanup before we upload
+        git reset --hard HEAD && git clean -fx
+        # Upload
+        TAG_MESSAGE=`git tag -n10 -l $CI_BUILD_TAG | sed 's/^[0-9.]*[ ]*//g'`
+        echo "Uploading release ${CI_BUILD_TAG} to TER"
+        .Build/bin/upload . "$T3O_USERNAME" "$T3O_PASSWORD" "$TAG_MESSAGE"
+      fi;

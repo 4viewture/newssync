@@ -1,0 +1,24 @@
+
+ # Module configuration
+module.tx_newssync_tools_newssyncsync {
+	persistence {
+		storagePid = {$module.tx_newssync_sync.persistence.storagePid}
+	}
+
+
+	view {
+		templateRootPaths.0 = {$module.tx_newssync_sync.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_newssync_sync.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_newssync_sync.view.layoutRootPath}
+	}
+	persistence {
+		classes {
+			Fourviewture\Newssync\Domain\Model\Page {
+				mapping {
+					tableName = pages
+				}
+			}
+		}
+
+	}
+}

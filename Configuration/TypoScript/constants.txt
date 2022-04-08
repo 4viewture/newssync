@@ -1,0 +1,15 @@
+
+module.tx_newssync_sync {
+	view {
+		# cat=module.tx_newssync_sync/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:newssync/Resources/Private/Templates/
+		# cat=module.tx_newssync_sync/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:newssync/Resources/Private/Partials/
+		# cat=module.tx_newssync_sync/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:newssync/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=module.tx_newssync_sync//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
