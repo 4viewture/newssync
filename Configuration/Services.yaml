@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+
+  Fourviewture\Newssync\:
+    resource: '../Classes/*'
+
+  Fourviewture\Newssync\Command\SyncAllCommandController:
+    tags:
+      - name: 'console.command'
+        command: 'newssync:syncAll'
+        schedulable: false
