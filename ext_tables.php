@@ -9,12 +9,12 @@ if (TYPO3_MODE === 'BE') {
      * Registers a Backend Module
      */
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'Fourviewture.newssync',
+        'Newssync',
         'site',	 // Make module a submodule of 'tools'
         'sync',	// Submodule key
         '',						// Position
         array(
-            'SyncConfiguration' => 'list, show, refreshData',
+            \Fourviewture\Newssync\Controller\SyncConfigurationController::class => 'list, show, refreshData',
 
         ),
         array(

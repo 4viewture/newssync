@@ -2,6 +2,10 @@
 
 namespace Fourviewture\Newssync\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
+use Fourviewture\Newssync\Domain\Model\Page;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +29,6 @@ namespace Fourviewture\Newssync\Tests\Unit\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Test case for class \Fourviewture\Newssync\Domain\Model\SyncConfiguration.
  *
@@ -34,16 +37,16 @@ namespace Fourviewture\Newssync\Tests\Unit\Domain\Model;
  *
  * @author Kay Strobach <typo3@kay-strobach.de>
  */
-class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class SyncConfigurationTest extends UnitTestCase
 {
     /**
-     * @var \Fourviewture\Newssync\Domain\Model\SyncConfiguration
+     * @var SyncConfiguration
      */
     protected $subject = null;
 
     public function setUp()
     {
-        $this->subject = new \Fourviewture\Newssync\Domain\Model\SyncConfiguration();
+        $this->subject = new SyncConfiguration();
     }
 
     public function tearDown()
@@ -293,7 +296,7 @@ class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function setStoragePidForPageSetsStoragePid()
     {
-        $storagePidFixture = new \Fourviewture\Newssync\Domain\Model\Page();
+        $storagePidFixture = new Page();
         $this->subject->setStoragePid($storagePidFixture);
 
         $this->assertAttributeEquals(
@@ -308,7 +311,7 @@ class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function getClearCachePagesReturnsInitialValueForPage()
     {
-        $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $newObjectStorage = new ObjectStorage();
         $this->assertEquals(
             $newObjectStorage,
             $this->subject->getClearCachePages()
@@ -320,8 +323,8 @@ class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function setClearCachePagesForObjectStorageContainingPageSetsClearCachePages()
     {
-        $clearCachePage = new \Fourviewture\Newssync\Domain\Model\Page();
-        $objectStorageHoldingExactlyOneClearCachePages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $clearCachePage = new Page();
+        $objectStorageHoldingExactlyOneClearCachePages = new ObjectStorage();
         $objectStorageHoldingExactlyOneClearCachePages->attach($clearCachePage);
         $this->subject->setClearCachePages($objectStorageHoldingExactlyOneClearCachePages);
 
@@ -337,8 +340,8 @@ class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function addClearCachePageToObjectStorageHoldingClearCachePages()
     {
-        $clearCachePage = new \Fourviewture\Newssync\Domain\Model\Page();
-        $clearCachePagesObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('attach'), array(), '', false);
+        $clearCachePage = new Page();
+        $clearCachePagesObjectStorageMock = $this->getMock(ObjectStorage::class, array('attach'), array(), '', false);
         $clearCachePagesObjectStorageMock->expects($this->once())->method('attach')->with($this->equalTo($clearCachePage));
         $this->inject($this->subject, 'clearCachePages', $clearCachePagesObjectStorageMock);
 
@@ -350,8 +353,8 @@ class SyncConfigurationTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function removeClearCachePageFromObjectStorageHoldingClearCachePages()
     {
-        $clearCachePage = new \Fourviewture\Newssync\Domain\Model\Page();
-        $clearCachePagesObjectStorageMock = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array('detach'), array(), '', false);
+        $clearCachePage = new Page();
+        $clearCachePagesObjectStorageMock = $this->getMock(ObjectStorage::class, array('detach'), array(), '', false);
         $clearCachePagesObjectStorageMock->expects($this->once())->method('detach')->with($this->equalTo($clearCachePage));
         $this->inject($this->subject, 'clearCachePages', $clearCachePagesObjectStorageMock);
 

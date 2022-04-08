@@ -1,8 +1,8 @@
 {
-    "name": "kaystrobach\/newssync",
+    "name": "kaystrobach/newssync",
     "type": "typo3-cms-extension",
     "description": "Allows to get news from one installation to another one",
-    "homepage": "https:\/\/www.4viewture.de",
+    "homepage": "https://www.4viewture.de",
     "license": [
         "GPL-2.0+"
     ],
@@ -14,34 +14,33 @@
         {
             "name": "Kay Strobach",
             "email": "drk-service@support.4viewture.de",
-            "homepage": "https:\/\/www.4viewture.de",
+            "homepage": "https://www.4viewture.de",
             "role": "Developer"
         }
     ],
     "require": {
-        "typo3\/cms-core": "^10.4"
+        "typo3/cms-core": "^10.4"
     },
     "autoload": {
         "psr-4": {
-            "Fourviewture\\Newssync\\": "Classes\/"
+            "Fourviewture\\Newssync\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Fourviewture\\Newssync\\": "Tests\/",
-            "TYPO3\\CMS\\Core\\Tests\\": "..\/..\/typo3\/sysext\/core\/Tests\/",
-            "TYPO3\\CMS\\Fluid\\Tests\\": "..\/..\/typo3\/sysext\/fluid\/Tests\/"
+            "Fourviewture\\Newssync\\": "Tests/",
+            "TYPO3\\CMS\\Core\\Tests\\": "../../typo3/sysext/core/Tests/",
+            "TYPO3\\CMS\\Fluid\\Tests\\": "../../typo3/sysext/fluid/Tests/"
         }
     },
     "config": {
-        "vendor-dir": ".Build\/vendor\/",
-        "bin-dir": ".Build\/bin\/"
+        "vendor-dir": ".Build/vendor/",
+        "bin-dir": ".Build/bin/"
     },
     "extra": {
-        "typo3\/cms": {
+        "typo3/cms": {
             "extension-key": "newssync",
-            "cms-package-dir": "{$vendor-dir}\/typo3\/cms",
-            "web-dir": ".Build\/Web"
+            "web-dir": ".Build/Web"
         }
     },
     "version": "9.12.0"

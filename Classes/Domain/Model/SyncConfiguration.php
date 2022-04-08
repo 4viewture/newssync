@@ -2,6 +2,7 @@
 
 namespace Fourviewture\Newssync\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use Fourviewture\Newssync\Services\Exception\OfflineException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
@@ -38,8 +39,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class SyncConfiguration extends AbstractEntity
 {
     /**
-     * @transient
      * @var string
+     * @Extbase\ORM\Transient
      */
     protected $transmissionBuffer = null;
     /**
@@ -93,7 +94,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * clearCachePages
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Fourviewture\Newssync\Domain\Model\Page>
+     * @var ObjectStorage<Page>
      */
     protected $clearCachePages = null;
     /**
@@ -111,7 +112,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Categories
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model\Category>
+     * @var ObjectStorage<\GeorgRinger\News\Domain\Model\Category>
      */
     protected $categories;
     /**
@@ -251,7 +252,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Adds a Page
      *
-     * @param \Fourviewture\Newssync\Domain\Model\Page $clearCachePage
+     * @param Page $clearCachePage
      * @return void
      */
     public function addClearCachePage(Page $clearCachePage)
@@ -261,7 +262,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Removes a Page
      *
-     * @param \Fourviewture\Newssync\Domain\Model\Page $clearCachePageToRemove The Page to be removed
+     * @param Page $clearCachePageToRemove The Page to be removed
      * @return void
      */
     public function removeClearCachePage(Page $clearCachePageToRemove)
@@ -271,7 +272,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Returns the clearCachePages
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Fourviewture\Newssync\Domain\Model\Page> $clearCachePages
+     * @return ObjectStorage<Page> $clearCachePages
      */
     public function getClearCachePages()
     {
@@ -280,7 +281,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Sets the clearCachePages
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Fourviewture\Newssync\Domain\Model\Page> $clearCachePages
+     * @param ObjectStorage<Page> $clearCachePages
      * @return void
      */
     public function setClearCachePages(ObjectStorage $clearCachePages)
@@ -430,7 +431,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Returns the categories
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
+     * @return ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
      */
     public function getCategories()
     {
@@ -439,7 +440,7 @@ class SyncConfiguration extends AbstractEntity
     /**
      * Sets the categories
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
+     * @param ObjectStorage<\GeorgRinger\News\Domain\Model> $categories
      * @return void
      */
     public function setCategories(ObjectStorage $categories)

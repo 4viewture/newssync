@@ -6,7 +6,6 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'dividers2tabs' => \true,
         'versioningWS' => \true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -16,28 +15,26 @@ return [
         'searchFields' => 'title,uri,description,processingfolder,lastsync,lastsynclog,auto_clear_cache_for_plugin,news_is_hidden_after_import,news_is_top_news,storage_pid,clear_cache_pages,',
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('newssync') . 'Resources/Public/Icons/tx_newssync_domain_model_syncconfiguration.gif'
     ],
-    'interface' => ['showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, uri, description, processingfolder, lastsync, lastsynclog, auto_clear_cache_for_plugin, news_is_hidden_after_import, news_is_top_news, storage_pid, clear_cache_pages'],
-    'types' => ['1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, title, uri, storage_pid, description, --div--;News, news_is_hidden_after_import, news_is_top_news, --div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages, --div--;Sync Log,lastsync, lastsynclog, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime']],
+    'types' => ['1' => ['showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,storage_pid,description,--div--;News,news_is_hidden_after_import,news_is_top_news,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime']],
     'palettes' => ['1' => ['showitem' => 'processingfolder,']],
     'columns' => [
         'sys_language_uid' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items' => [
-                    ['LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1],
-                    ['LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0]
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0]
                 ]
             ]
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -48,17 +45,17 @@ return [
         ],
         'l10n_diffsource' => ['config' => ['type' => 'passthrough']],
         't3ver_label' => [
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
             'config' => ['type' => 'input', 'size' => 30, 'max' => 255]
         ],
         'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => ['type' => 'check']
         ],
         'starttime' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
@@ -72,7 +69,7 @@ return [
         ],
         'endtime' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
@@ -173,8 +170,7 @@ return [
                         'title' => 'Edit',
                         'windowOpenParameters' => 'height=350,width=580,status=0,menubar=0,scrollbars=1'
                     ]
-                ],
-                'wizards' => ['_PADDING' => 1, '_VERTICAL' => 1]
+                ]
             ]
         ]
     ]

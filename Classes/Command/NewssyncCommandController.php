@@ -2,6 +2,8 @@
 
 namespace Fourviewture\Newssync\Command;
 
+use Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository;
+use Fourviewture\Newssync\Services\ImportService;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -11,12 +13,12 @@ class NewssyncCommandController extends CommandController
     /**
      * syncConfigurationRepository
      *
-     * @var \Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository
+     * @var SyncConfigurationRepository
      * @Extbase\Inject
      */
     protected $syncConfigurationRepository = null;
     /**
-     * @var \Fourviewture\Newssync\Services\ImportService
+     * @var ImportService
      * @Extbase\Inject
      */
     protected $importService;

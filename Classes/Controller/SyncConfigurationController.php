@@ -43,12 +43,12 @@ class SyncConfigurationController extends ActionController
     /**
      * syncConfigurationRepository
      *
-     * @var \Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository
+     * @var SyncConfigurationRepository
      * @Extbase\Inject
      */
     protected $syncConfigurationRepository = null;
     /**
-     * @var \Fourviewture\Newssync\Services\ImportService
+     * @var ImportService
      * @Extbase\Inject
      */
     protected $importService;

@@ -83,7 +83,7 @@ class Page extends AbstractEntity
      *
      * @return int
      */
-    public function getUid()
+    public function getUid(): ?int
     {
         return $this->uid;
     }
@@ -93,7 +93,7 @@ class Page extends AbstractEntity
      *
      * @return int
      */
-    public function getPid()
+    public function getPid(): ?int
     {
         return $this->pid;
     }

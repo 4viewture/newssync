@@ -2,6 +2,13 @@
 
 namespace Fourviewture\Newssync\Services\Provider;
 
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
+use Fourviewture\Newssync\Services\Exception\OfflineException;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
+use TYPO3\CMS\Core\Resource\File;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use GeorgRinger\News\Domain\Model\FileReference;
 use GeorgRinger\News\Domain\Model\News;
@@ -42,8 +49,8 @@ class RssImportService extends AbstractImportService
      * @param NewsRepository $newsRepository
      * @param ObjectManager $objectManager
      * @param PersistenceManager $persistenceManager
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
+     * @throws ExtensionConfigurationExtensionNotConfiguredException
+     * @throws ExtensionConfigurationPathDoesNotExistException
      */
     public function __construct(NewsRepository $newsRepository, ObjectManager $objectManager, PersistenceManager $persistenceManager)
     {
@@ -60,7 +67,7 @@ class RssImportService extends AbstractImportService
     /**
      * @param SyncConfiguration $syncConfiguration
      * @return bool
-     * @throws \Fourviewture\Newssync\Services\Exception\OfflineException
+     * @throws OfflineException
      */
     public function canHandle(SyncConfiguration $syncConfiguration)
     {
@@ -70,9 +77,9 @@ class RssImportService extends AbstractImportService
     }
     /**
      * @param SyncConfiguration $syncConfiguration
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     * @throws ExistingTargetFileNameException
      */
     public function handle(SyncConfiguration $syncConfiguration)
     {
@@ -135,12 +142,12 @@ class RssImportService extends AbstractImportService
     /**
      * @param News $news
      * @param $uri
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
+     * @throws ExistingTargetFileNameException
      */
     protected function addFile(News $news, $uri)
     {
         $filename = basename(parse_url($uri, PHP_URL_PATH));
-        $resourceFactory = ResourceFactory::getInstance();
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $tmpFileName = GeneralUtility::tempnam('rss-import');
         file_put_contents($tmpFileName, GeneralUtility::getUrl($uri));
         $newFile = $this->getFileByContent($tmpFileName);
@@ -161,7 +168,7 @@ class RssImportService extends AbstractImportService
     }
     /**
      * @param string $tmpName
-     * @return null|\TYPO3\CMS\Core\Resource\File
+     * @return null|File
      */
     protected function getFileByContent($tmpName)
     {
@@ -170,7 +177,7 @@ class RssImportService extends AbstractImportService
         if (count($files)) {
             foreach ($files as $fileInfo) {
                 if ($fileInfo['storage'] > 0) {
-                    $file = ResourceFactory::getInstance()->getFileObjectByStorageAndIdentifier($fileInfo['storage'], $fileInfo['identifier']);
+                    $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObjectByStorageAndIdentifier($fileInfo['storage'], $fileInfo['identifier']);
                     break;
                 }
             }

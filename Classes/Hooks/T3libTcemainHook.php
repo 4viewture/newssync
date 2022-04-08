@@ -14,7 +14,7 @@ class T3libTcemainHook
      * Deletes newssync folders inside typo3temp/.
      *
      * @param array                                    $params
-     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $pObj
+     * @param DataHandler $pObj
      */
     public function clearCachePostProc(array $params, DataHandler &$pObj)
     {

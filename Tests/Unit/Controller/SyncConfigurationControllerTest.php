@@ -1,6 +1,11 @@
 <?php
 namespace Fourviewture\Newssync\Tests\Unit\Controller;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Fourviewture\Newssync\Controller\SyncConfigurationController;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,17 +29,16 @@ namespace Fourviewture\Newssync\Tests\Unit\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Test case for class Fourviewture\Newssync\Controller\SyncConfigurationController.
  *
  * @author Kay Strobach <typo3@kay-strobach.de>
  */
-class SyncConfigurationControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class SyncConfigurationControllerTest extends UnitTestCase
 {
 
     /**
-     * @var \Fourviewture\Newssync\Controller\SyncConfigurationController
+     * @var SyncConfigurationController
      */
     protected $subject = null;
 
@@ -53,13 +57,13 @@ class SyncConfigurationControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function listActionFetchesAllSyncConfigurationsFromRepositoryAndAssignsThemToView()
     {
-        $allSyncConfigurations = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', false);
+        $allSyncConfigurations = $this->getMock(ObjectStorage::class, array(), array(), '', false);
 
         $syncConfigurationRepository = $this->getMock('Fourviewture\\Newssync\\Domain\\Repository\\SyncConfigurationRepository', array('findAll'), array(), '', false);
         $syncConfigurationRepository->expects($this->once())->method('findAll')->will($this->returnValue($allSyncConfigurations));
         $this->inject($this->subject, 'syncConfigurationRepository', $syncConfigurationRepository);
 
-        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assign')->with('syncConfigurations', $allSyncConfigurations);
         $this->inject($this->subject, 'view', $view);
 
@@ -71,9 +75,9 @@ class SyncConfigurationControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function showActionAssignsTheGivenSyncConfigurationToView()
     {
-        $syncConfiguration = new \Fourviewture\Newssync\Domain\Model\SyncConfiguration();
+        $syncConfiguration = new SyncConfiguration();
 
-        $view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+        $view = $this->getMock(ViewInterface::class);
         $this->inject($this->subject, 'view', $view);
         $view->expects($this->once())->method('assign')->with('syncConfiguration', $syncConfiguration);
 
