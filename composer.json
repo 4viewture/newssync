@@ -42,6 +42,5 @@
             "extension-key": "newssync",
             "web-dir": ".Build/Web"
         }
-    },
-    "version": "9.12.0"
+    }
 }
