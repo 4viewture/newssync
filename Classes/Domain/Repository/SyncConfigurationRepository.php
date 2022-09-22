@@ -2,6 +2,7 @@
 namespace Fourviewture\Newssync\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /***************************************************************
@@ -38,14 +39,22 @@ class SyncConfigurationRepository extends Repository
     {
         $querySettings = $this->getQuerySettings();
         $querySettings->setRespectStoragePage(false);
+        $querySettings->setIgnoreEnableFields(true);
         $this->setDefaultQuerySettings($querySettings);
     }
-    
+
     /**
      * @return QuerySettingsInterface
      */
     protected function getQuerySettings()
     {
         return $this->objectManager->get(QuerySettingsInterface::class);
+    }
+
+    public function findAllIncludingDisabled(): QueryResultInterface
+    {
+        $q = $this->createQuery();
+        $q->getQuerySettings()->setIgnoreEnableFields(true);
+        return $q->execute();
     }
 }

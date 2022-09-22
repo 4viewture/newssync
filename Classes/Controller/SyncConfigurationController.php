@@ -40,26 +40,24 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class SyncConfigurationController extends ActionController
 {
-    /**
-     * syncConfigurationRepository
-     *
-     * @var SyncConfigurationRepository
-     * @Extbase\Inject
-     */
-    protected $syncConfigurationRepository = null;
-    /**
-     * @var ImportService
-     * @Extbase\Inject
-     */
-    protected $importService;
-    /**
-     * action list
-     *
-     * @return void
-     */
-    public function listAction()
+    protected ?SyncConfigurationRepository $syncConfigurationRepository = null;
+
+    protected ?ImportService $importService;
+
+    public function injectSyncConfigurationRepository(SyncConfigurationRepository $repository)
     {
-        $synConfigurations = $this->syncConfigurationRepository->findAll();
+        $this->syncConfigurationRepository = $repository;
+    }
+
+    public function injectImportService(ImportService $service)
+    {
+        $this->importService = $service;
+    }
+
+
+    public function listAction(): void
+    {
+        $synConfigurations = $this->syncConfigurationRepository->findAllIncludingDisabled();
         $this->view->assign('syncConfigurations', $synConfigurations);
     }
     /**
