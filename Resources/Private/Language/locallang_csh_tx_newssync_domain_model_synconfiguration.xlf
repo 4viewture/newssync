@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-12-08T21:32:37Z" product-name="newssync">
+		<header/>
+		<body>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="uri.description">
+				<source>uri</source>
+			</trans-unit>
+			<trans-unit id="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="processingfolder.description">
+				<source>processingfolder</source>
+			</trans-unit>
+			<trans-unit id="lastsync.description">
+				<source>lastsync</source>
+			</trans-unit>
+			<trans-unit id="lastsynclog.description">
+				<source>lastsynclog</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

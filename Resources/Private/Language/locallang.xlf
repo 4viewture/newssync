@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-12-13T13:17:52Z" product-name="newssync">
+		<header/>
+		<body>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration">
+				<source>Sync Configuration</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.uri">
+				<source>Uri</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.processingfolder">
+				<source>Processingfolder</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.lastsync">
+				<source>Lastsync</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.lastsynclog">
+				<source>Lastsynclog</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.auto_clear_cache_for_plugin">
+				<source>Auto Clear Cache For Plugin</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.news_is_hidden_after_import">
+				<source>News Is Hidden After Import</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.news_is_top_news">
+				<source>News Is Top News</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.storage_pid">
+				<source>Storage Pid</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.clear_cache_pages">
+				<source>Clear Cache Pages</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_page">
+				<source>Page</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

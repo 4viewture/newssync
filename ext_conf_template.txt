@@ -1,0 +1,2 @@
+# cat=basic/rss/simplepie; type=int; label=Cache Lifetime for simplepie
+simplePieCacheRssTime = 3600

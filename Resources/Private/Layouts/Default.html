@@ -1,0 +1,39 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+<f:be.container
+		includeCssFiles="{}"
+>
+	<div class="module" data-module-id="" data-module-name="">
+		<div class="module-docheader t3js-module-docheader">
+			<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
+				<div class="module-docheader-bar-column-left">
+					<div class="form-inline">
+
+					</div>
+				</div>
+				<div class="module-docheader-bar-column-right">
+				</div>
+			</div>
+			<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons">
+				<div class="module-docheader-bar-column-left">
+					<div class="btn-toolbar" role="toolbar" aria-label="">
+						<f:render section="iconButtons" optional="1"/>
+					</div>
+				</div>
+				<div class="module-docheader-bar-column-right">
+					<div class="btn-toolbar" role="toolbar" aria-label="">
+						<div class="btn-group" role="group" aria-label="">
+							<a href="#" class="btn btn-default btn-sm" onClick="document.location.reload();">
+								<core:icon identifier="actions-system-refresh" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module-body t3js-module-body">
+			<h1><f:render section="headline" optional="1"/></h1>
+			<f:render section="content" />
+		</div>
+	</div>
+</f:be.container>
