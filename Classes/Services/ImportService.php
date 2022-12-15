@@ -22,7 +22,9 @@ class ImportService
     /**
      * @var array
      */
-    protected $services = array();
+    protected array $services = array();
+
+
 
     /**
      * ImportService constructor.
@@ -37,9 +39,11 @@ class ImportService
                 $this->services[] = $this->objectManager->get($service);
             }
         }
+
+
     }
 
-    public function import(SyncConfiguration &$syncConfiguration)
+    public function import(SyncConfiguration &$syncConfiguration): void
     {
         if (count($this->services) === 0) {
             $syncConfiguration->setLastsynclog('No Importservices defined (' . count($this->services) . ')');
