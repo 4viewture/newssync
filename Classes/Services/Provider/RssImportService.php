@@ -26,8 +26,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 class RssImportService extends AbstractImportService
 {
-    const IMPORTID = 'newssync_rssimport';
-    const CACHE_DIRECTORY = 'typo3temp/Cache/Data/newssync/SimplePie';
+    public const IMPORT_ID = 'newssync_rssimport';
+    private const CACHE_DIRECTORY = 'typo3temp/Cache/Data/newssync/SimplePie';
     /**
      * @var NewsRepository
      */
@@ -47,18 +47,16 @@ class RssImportService extends AbstractImportService
     /**
      * RssImportService constructor.
      * @param NewsRepository $newsRepository
-     * @param ObjectManager $objectManager
      * @param PersistenceManager $persistenceManager
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    public function __construct(NewsRepository $newsRepository, ObjectManager $objectManager, PersistenceManager $persistenceManager)
+    public function __construct(NewsRepository $newsRepository, PersistenceManager $persistenceManager)
     {
         $this->newsRepository = $newsRepository;
-        $this->objectManager = $objectManager;
         $this->persistenceManager = $persistenceManager;
         /** @var ExtensionConfiguration $configurationUtility */
-        $configurationUtility = $this->objectManager->get(ExtensionConfiguration::class);
+        $configurationUtility = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->emConfiguration = $configurationUtility->get('newssync');
         if (!class_exists('SimplePie')) {
             require_once ExtensionManagementUtility::extPath('newssync') . 'Resources/Private/PHP/vendor/autoload.php';
@@ -90,98 +88,38 @@ class RssImportService extends AbstractImportService
         $simplePie->set_cache_duration($this->emConfiguration['simplePieCacheRssTime']);
         $simplePie->set_feed_url($syncConfiguration->getUri());
         $this->log('  URL:   ' . $syncConfiguration->getUri());
-        $this->log('  Cache: ' . Environment::getPublicPath() . '/' . self::CACHE_DIRECTORY);
+        $this->log('  Cache: ' . Environment::getPublicPath() . '/' . static::CACHE_DIRECTORY);
         $this->log('  Cache: ' . $this->emConfiguration['simplePieCacheRssTime']);
         $simplePie->init();
         $items = $simplePie->get_items();
         /** @var \SimplePie_Item $item */
         /** @var  News $news */
         foreach ($items as $item) {
-            $new = false;
             $syncKey = $syncConfiguration->getUid() . ':' . md5($item->get_link());
-            $news = $this->newsRepository->findOneByImportSourceAndImportId(self::IMPORTID, $syncKey);
-            if ($news === null) {
-                $news = new News();
-                $new = true;
-            }
-            $news->setImportSource(self::IMPORTID);
-            $news->setImportId($syncKey);
-            $news->setPid($syncConfiguration->getStoragePid());
-            $news->setTitle($item->get_title());
+            $this->prepareNews($syncConfiguration, $syncKey, $item->get_title());
+
             $news->setDescription($item->get_description());
             $news->setTeaser($item->get_description());
             $news->setBodytext($item->get_content());
             $news->setDatetime(new \DateTime($item->get_date()));
-            if ($new) {
-                $this->log('Importing "' . $news->getTitle() . '"');
+            if ($this->persistenceManager->isNewObject($news)) {
                 if ($item->get_enclosure(0) !== null) {
                     $this->log('    enclosure found');
                     $enclosure = $item->get_enclosure(0);
                     if ($enclosure->get_link() !== null && $enclosure->get_link() !== '//?#') {
                         $this->log('      uri :' . $enclosure->get_link());
                         $enclosure = $item->get_enclosure(0);
-                        $this->addFile($news, $enclosure->get_link());
+                        $this->addFalMediaByUri($news, $enclosure->get_link());
                     } else {
                         $this->log('      skipped because of invalid uri ... ' . $enclosure->get_link());
                     }
                 }
-                foreach ($syncConfiguration->getCategories() as $category) {
-                    $news->addCategory($category);
-                }
-                $news->setHidden($syncConfiguration->getNewsIsHiddenAfterImport());
-                $news->setIstopnews($syncConfiguration->getNewsIsTopNews());
                 $this->newsRepository->add($news);
-            } else {
-                $this->log('Updating "' . $news->getTitle() . '"');
-                $this->newsRepository->update($news);
+                $this->persistenceManager->persistAll();
             }
-            $this->log('    with key: ' . $syncKey . ' to ' . $syncConfiguration->getStoragePid());
+
+            $this->saveNews($syncConfiguration, $news);
         }
         $this->clearCache($syncConfiguration->getStoragePid());
-    }
-    /**
-     * @param News $news
-     * @param $uri
-     * @throws ExistingTargetFileNameException
-     */
-    protected function addFile(News $news, $uri)
-    {
-        $filename = basename(parse_url($uri, PHP_URL_PATH));
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-        $tmpFileName = GeneralUtility::tempnam('rss-import');
-        file_put_contents($tmpFileName, GeneralUtility::getUrl($uri));
-        $newFile = $this->getFileByContent($tmpFileName);
-        if ($newFile === null) {
-            $storage = $resourceFactory->getDefaultStorage();
-            $newFile = $storage->addFile($tmpFileName, $storage->getDefaultFolder(), 'newssync-' . hash('crc32b', $uri) . '-' . $filename);
-            $this->log('      created file:  ' . $newFile->getIdentifier());
-        } else {
-            $this->log('      existing file: ' . $newFile->getIdentifier());
-        }
-        $fileReference = new FileReference();
-        $fileReference->setFileUid($newFile->getUid());
-        $fileReference->setShowinpreview(true);
-        $news->addFalMedia($fileReference);
-        if (file_exists($tmpFileName)) {
-            unlink($tmpFileName);
-        }
-    }
-    /**
-     * @param string $tmpName
-     * @return null|File
-     */
-    protected function getFileByContent($tmpName)
-    {
-        $file = null;
-        $files = FileIndexRepository::getInstance()->findByContentHash(sha1(file_get_contents($tmpName)));
-        if (count($files)) {
-            foreach ($files as $fileInfo) {
-                if ($fileInfo['storage'] > 0) {
-                    $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObjectByStorageAndIdentifier($fileInfo['storage'], $fileInfo['identifier']);
-                    break;
-                }
-            }
-        }
-        return $file;
     }
 }
