@@ -20,7 +20,7 @@ $EM_CONF['newssync'] = array(
     'version' => '10.5.0',
     'constraints' => array(
         'depends' => array(
-            'typo3' => '10.4.0-10.5.99',
+            'typo3' => '10.4.0-11.5.99',
         ),
         'conflicts' => array(
         ),
