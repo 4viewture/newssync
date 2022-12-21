@@ -57,7 +57,7 @@ class SyncConfigurationController extends ActionController
 
     public function listAction(): void
     {
-        $synConfigurations = $this->syncConfigurationRepository->findAllIncludingDisabled();
+        $synConfigurations = $this->syncConfigurationRepository->findAll();
         $this->view->assign('syncConfigurations', $synConfigurations);
     }
     /**

@@ -39,7 +39,6 @@ class SyncConfigurationRepository extends Repository
     {
         $querySettings = $this->getQuerySettings();
         $querySettings->setRespectStoragePage(false);
-        $querySettings->setIgnoreEnableFields(true);
         $this->setDefaultQuerySettings($querySettings);
     }
 
