@@ -111,9 +111,9 @@ class AbstractImportService
      * @param $uri
      * @throws ExistingTargetFileNameException
      */
-    protected function addFalMediaByUri(News $news, $uri): void
+    protected function addFalMediaByUri(SyncConfiguration $syncConfiguration, News $news, $uri): void
     {
-        $newFile = $this->getFileByContent($uri);
+        $newFile = $this->getFileByContent($syncConfiguration, $uri);
 
         foreach($news->getFalMedia() as $media) {
             if ($media instanceof FileReference) {
@@ -130,9 +130,9 @@ class AbstractImportService
         $news->addFalMedia($fileReference);
     }
 
-    protected function addDownloadFilesByUri(News $news, string $uri, string $forceFileName = null): void
+    protected function addDownloadFilesByUri(SyncConfiguration $syncConfiguration, News $news, string $uri, string $forceFileName = null): void
     {
-        $newFile = $this->getFileByContent($uri, $forceFileName);
+        $newFile = $this->getFileByContent($syncConfiguration, $uri, $forceFileName);
 
         foreach ($news->getFalRelatedFiles()->toArray() as $file) {
             if ($file instanceof FileReference) {
@@ -171,11 +171,7 @@ class AbstractImportService
         $news->addRelatedLink($link);
     }
 
-    /**
-     * @param string $uri
-     * @return null|File
-     */
-    protected function getFileByContent(string $uri, string $forcedFileName = null)
+    protected function getFileByContent(SyncConfiguration $syncConfiguration, string $uri, string $forcedFileName = null)
     {
         $tmpFileName = GeneralUtility::tempnam(static::IMPORT_ID);
         file_put_contents($tmpFileName, GeneralUtility::getUrl($uri));
@@ -205,6 +201,15 @@ class AbstractImportService
 
         $storage = $resourceFactory->getDefaultStorage();
         $folder = $storage->getDefaultFolder();
+        if ($syncConfiguration->getProcessingfolder() !== '') {
+            $storage = $resourceFactory->getStorageObjectFromCombinedIdentifier($syncConfiguration->getProcessingfolder());
+            $folder = $resourceFactory->getObjectFromCombinedIdentifier($syncConfiguration->getProcessingfolder());
+            if (!$folder instanceof Folder) {
+                $this->log('      Problem using ' . $syncConfiguration->getProcessingfolder() . ' as storage folder');
+                return null;
+            }
+        }
+
         $newFile = $storage->addFile(
             $tmpFileName,
             $folder,
