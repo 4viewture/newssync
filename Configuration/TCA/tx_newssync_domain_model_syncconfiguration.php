@@ -15,7 +15,7 @@ return [
         'searchFields' => 'title,uri,description,processingfolder,lastsync,lastsynclog,auto_clear_cache_for_plugin,news_is_hidden_after_import,news_is_top_news,storage_pid,clear_cache_pages,',
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('newssync') . 'Resources/Public/Icons/tx_newssync_domain_model_syncconfiguration.gif'
     ],
-    'types' => ['1' => ['showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,storage_pid,description,--div--;News,news_is_hidden_after_import,news_is_top_news,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime']],
+    'types' => ['1' => ['showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,processingfolder,storage_pid,description,--div--;News,news_is_hidden_after_import,news_is_top_news,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime']],
     'palettes' => ['1' => ['showitem' => 'processingfolder,']],
     'columns' => [
         'sys_language_uid' => [
@@ -99,7 +99,12 @@ return [
         'processingfolder' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.processingfolder',
-            'config' => ['type' => 'input', 'size' => 30, 'eval' => 'trim']
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+                'placeholder' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_storage.processingfolder.placeholder'
+            ]
         ],
         'lastsync' => [
             'exclude' => 1,
@@ -138,11 +143,22 @@ return [
             'exclude' => 1,
             'label' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.storage_pid',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'foreign_table' => 'pages',
-                'minitems' => 0,
-                'maxitems' => 1
+                'allowed' => 'pages',
+                'behaviour' => [
+                    'allowLanguageSynchronization' => 1,
+                ],
+                'default' => 0,
+                'internal_type' => 'db',
+                'maxitems' => 1,
+                'minitems' => 1,
+                'size' => 1,
+                'suggestOptions' => [
+                    'default' => [
+                        'additionalSearchFields' => 'nav_title, url',
+                        'addWhere' => 'AND pages.uid != ###THIS_UID###'
+                    ]
+                ],
+                'type' => 'group'
             ]
         ],
         'clear_cache_pages' => [
