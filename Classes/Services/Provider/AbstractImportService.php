@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -202,9 +203,10 @@ class AbstractImportService
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
 
         $storage = $resourceFactory->getDefaultStorage();
+        $folder = $storage->getDefaultFolder();
         $newFile = $storage->addFile(
             $tmpFileName,
-            $storage->getDefaultFolder(),
+            $folder,
             'newssync-' . hash('crc32b', $uri) . '-' . $filename
         );
 
