@@ -12,10 +12,10 @@ return [
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
         'enablecolumns' => ['disabled' => 'hidden', 'starttime' => 'starttime', 'endtime' => 'endtime'],
-        'searchFields' => 'title,uri,description,processingfolder,lastsync,lastsynclog,auto_clear_cache_for_plugin,news_is_hidden_after_import,news_is_top_news,storage_pid,clear_cache_pages,',
+        'searchFields' => 'title,uri,description,processingfolder,lastsync,lastsynclog,auto_clear_cache_for_plugin,news_is_hidden_after_import,news_type,news_is_top_news,storage_pid,clear_cache_pages,',
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('newssync') . 'Resources/Public/Icons/tx_newssync_domain_model_syncconfiguration.gif'
     ],
-    'types' => ['1' => ['showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,processingfolder,storage_pid,description,--div--;News,news_is_hidden_after_import,news_is_top_news,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime']],
+    'types' => ['1' => ['showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,processingfolder,storage_pid,description,--div--;News,news_type,news_is_hidden_after_import,news_is_top_news,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime']],
     'palettes' => ['1' => ['showitem' => 'processingfolder,']],
     'columns' => [
         'sys_language_uid' => [

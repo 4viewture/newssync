@@ -279,6 +279,7 @@ class AbstractImportService
         $news->setType(0);
         $news->setCrdate(new \DateTime());
         $news->setDatetime(new \DateTime());
+        $news->setType($syncConfiguration->getNewsType());
 
         $news->setHidden($syncConfiguration->getNewsIsHiddenAfterImport());
         $news->setIstopnews($syncConfiguration->getNewsIsTopNews());

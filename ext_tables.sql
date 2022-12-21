@@ -13,6 +13,7 @@ CREATE TABLE tx_newssync_domain_model_syncconfiguration (
 	lastsync datetime DEFAULT '0000-00-00 00:00:00',
 	lastsynclog longtext NOT NULL,
 	auto_clear_cache_for_plugin tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	news_type varchar(100) NOT NULL DEFAULT '0',
 	news_is_hidden_after_import tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	news_is_top_news tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	storage_pid int(11) unsigned DEFAULT '0',

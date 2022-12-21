@@ -115,6 +115,12 @@ class SyncConfiguration extends AbstractEntity
      * @var ObjectStorage<\GeorgRinger\News\Domain\Model\Category>
      */
     protected $categories;
+
+    /**
+     * @var int
+     */
+    protected $newsType = 0;
+
     /**
      * Returns the title
      *
@@ -446,5 +452,21 @@ class SyncConfiguration extends AbstractEntity
     public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNewsType(): int
+    {
+        return $this->newsType ?? 0;
+    }
+
+    /**
+     * @param int $newsType
+     */
+    public function setNewsType(int $newsType): void
+    {
+        $this->newsType = $newsType;
     }
 }
