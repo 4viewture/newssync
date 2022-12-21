@@ -96,7 +96,7 @@ class RssImportService extends AbstractImportService
         /** @var  News $news */
         foreach ($items as $item) {
             $syncKey = $syncConfiguration->getUid() . ':' . md5($item->get_link());
-            $this->prepareNews($syncConfiguration, $syncKey, $item->get_title());
+            $news = $this->prepareNews($syncConfiguration, $syncKey, $item->get_title());
 
             $news->setDescription($item->get_description());
             $news->setTeaser($item->get_description());
