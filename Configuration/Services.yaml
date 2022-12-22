@@ -12,4 +12,4 @@ services:
     tags:
       - name: 'console.command'
         command: 'newssync:syncAll'
-        schedulable: false
+        schedulable: true
