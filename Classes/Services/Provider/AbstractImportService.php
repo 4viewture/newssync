@@ -6,6 +6,7 @@ use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use GeorgRinger\News\Domain\Model\FileReference;
 use GeorgRinger\News\Domain\Model\Link;
 use GeorgRinger\News\Domain\Model\News;
+use GeorgRinger\News\Domain\Model\NewsDefault;
 use GeorgRinger\News\Domain\Repository\NewsRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -14,7 +15,6 @@ use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
-use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -264,12 +264,12 @@ class AbstractImportService
         return $value;
     }
 
-    protected function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): News
+    protected function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): NewsDefault
     {
         $news = $this->newsRepository->findOneByImportSourceAndImportId(static::IMPORT_ID, $syncKey);
 
         if ($news === null) {
-            $news = new News();
+            $news = new NewsDefault();
         }
 
         $news->setTitle($title);
