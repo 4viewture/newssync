@@ -264,7 +264,7 @@ class AbstractImportService
         return $value;
     }
 
-    protected function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): NewsDefault
+    protected function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): News
     {
         $news = $this->newsRepository->findOneByImportSourceAndImportId(static::IMPORT_ID, $syncKey);
 
