@@ -10,7 +10,10 @@ CREATE TABLE tx_newssync_domain_model_syncconfiguration (
 	uri varchar(2048) DEFAULT '' NOT NULL,
 	description text NOT NULL,
 	processingfolder varchar(255) DEFAULT '' NOT NULL,
-	lastsync datetime DEFAULT '0000-00-00 00:00:00',
+	lastsync datetime DEFAULT '1970-01-01 00:00:00',
+	# may use CURRENT_TIMESTAMP for mysql 5.6.5+
+	# lastsync datetime DATETIME DEFAULT CURRENT_TIMESTAMP
+	#
 	lastsynclog longtext NOT NULL,
 	auto_clear_cache_for_plugin tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	news_type varchar(100) NOT NULL DEFAULT '0',
