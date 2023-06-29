@@ -5,7 +5,9 @@ namespace Fourviewture\Newssync\Services;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use Fourviewture\Newssync\Services\Exception\SyncException;
 use Fourviewture\Newssync\Services\Provider\AbstractImportService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * Class ImportService
@@ -28,15 +30,16 @@ class ImportService
 
     /**
      * ImportService constructor.
-     * @param ObjectManager $objectManager
      */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct()
     {
-        $this->objectManager = $objectManager;
-
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['newssync']['importservices'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['newssync']['importservices'] as $service) {
-                $this->services[] = $this->objectManager->get($service);
+                $this->services[] = GeneralUtility::makeInstance(
+                    $service,
+                    GeneralUtility::makeInstance(\GeorgRinger\News\Domain\Repository\NewsRepository::class),
+                    GeneralUtility::makeInstance(PersistenceManager::class)
+                );
             }
         }
 

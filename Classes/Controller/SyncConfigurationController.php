@@ -1,9 +1,13 @@
 <?php
 namespace Fourviewture\Newssync\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Attribute\Controller;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository;
 use Fourviewture\Newssync\Services\ImportService;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
@@ -38,11 +42,20 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 /**
  * SyncConfigurationController
  */
+
+#[Controller]
 class SyncConfigurationController extends ActionController
 {
     protected ?SyncConfigurationRepository $syncConfigurationRepository = null;
 
     protected ?ImportService $importService;
+
+    protected ?ModuleTemplateFactory $moduleTemplateFactory;
+
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory)
+    {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
 
     public function injectSyncConfigurationRepository(SyncConfigurationRepository $repository)
     {
@@ -55,20 +68,32 @@ class SyncConfigurationController extends ActionController
     }
 
 
-    public function listAction(): void
+    public function listAction(): ResponseInterface
     {
-        $synConfigurations = $this->syncConfigurationRepository->findAll();
+        $synConfigurations = $this->syncConfigurationRepository->findAllIncludingDisabled();
         $this->view->assign('syncConfigurations', $synConfigurations);
+
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        // Adding title, menus, buttons, etc. using $moduleTemplate ...
+        $moduleTemplate->setContent($this->view->render());
+        return $this->htmlResponse($moduleTemplate->renderContent());
     }
     /**
      * action show
      *
-     * @param SyncConfiguration $syncConfiguration
+     * @param int $sync_preview
      * @return void
      */
-    public function showAction(SyncConfiguration $syncConfiguration)
+    public function showAction(int $sync_preview): ResponseInterface
     {
+        $syncConfiguration = $this->syncConfigurationRepository->findOneIncludingDeletedByUid($sync_preview);
+
         $this->view->assign('syncConfiguration', $syncConfiguration);
+
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        // Adding title, menus, buttons, etc. using $moduleTemplate ...
+        $moduleTemplate->setContent($this->view->render());
+        return $this->htmlResponse($moduleTemplate->renderContent());
     }
     /**
      * action refreshData
@@ -80,8 +105,10 @@ class SyncConfigurationController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
-    public function refreshDataAction(SyncConfiguration $syncConfiguration)
+    public function refreshDataAction(int $sync_preview): ResponseInterface
     {
+        $syncConfiguration = $this->syncConfigurationRepository->findOneIncludingDeletedByUid($sync_preview);
+
         try {
             $this->importService->import($syncConfiguration);
         } catch (\Exception $e) {
@@ -90,6 +117,6 @@ class SyncConfigurationController extends ActionController
         }
         $this->syncConfigurationRepository->update($syncConfiguration);
         $this->addFlashMessage('Refreshed: ' . $syncConfiguration->getTitle());
-        $this->redirect('list');
+        return $this->redirect('list');
     }
 }
