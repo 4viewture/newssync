@@ -276,7 +276,7 @@ class AbstractImportService
         $news->setImportSource(static::IMPORT_ID);
         $news->setImportId($syncKey);
         $news->setPid($syncConfiguration->getStoragePid());
-        $news->setType(0);
+        $news->setType($syncConfiguration->getNewsType());
         $news->setCrdate(new \DateTime());
         $news->setDatetime(new \DateTime());
         $news->setType($syncConfiguration->getNewsType());
