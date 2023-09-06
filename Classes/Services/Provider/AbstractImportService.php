@@ -295,17 +295,35 @@ class AbstractImportService
         return $news;
     }
 
+    protected function enforceTypeWithDirectDatabaseAccess(News $news)
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_news_domain_model_news');
+        $queryBuilder->getRestrictions()->removeByType(HiddenRestriction::class);
+
+        $queryBuilder
+            ->update('tx_news_domain_model_news')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $news->getUid())
+            )
+            ->set('type', $news->getType())
+            ->execute();
+    }
+
     protected function saveNews(SyncConfiguration $syncConfiguration, News $news) {
         if ($this->persistenceManager->isNewObject($news)) {
             $this->log('  Importing ' . $news->getTitle());
             $this->newsRepository->add($news);
             $this->persistenceManager->persistAll();
+            $this->log('    with type: ' . $news->getType());
+            $this->enforceTypeWithDirectDatabaseAccess($news);
         } else {
             $this->log('  Updating ' . $news->getTitle());
             $this->newsRepository->update($news);
+            $this->persistenceManager->persistAll();
         }
         $this->log('    with key: ' . $news->getImportId() . ' to ' . $syncConfiguration->getStoragePid());
         $slug = $this->generateSlug($this->persistenceManager->getIdentifierByObject($news));
         $this->log('    with slug: ' . $slug);
+
     }
 }
