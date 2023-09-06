@@ -299,11 +299,11 @@ class AbstractImportService
         if ($this->persistenceManager->isNewObject($news)) {
             $this->log('  Importing ' . $news->getTitle());
             $this->newsRepository->add($news);
-            $this->persistenceManager->persistAll();
         } else {
             $this->log('  Updating ' . $news->getTitle());
             $this->newsRepository->update($news);
         }
+        $this->persistenceManager->persistAll();
         $this->log('    with key: ' . $news->getImportId() . ' to ' . $syncConfiguration->getStoragePid());
         $slug = $this->generateSlug($this->persistenceManager->getIdentifierByObject($news));
         $this->log('    with slug: ' . $slug);
