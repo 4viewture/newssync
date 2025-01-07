@@ -38,6 +38,11 @@ class AbstractImportService
      */
     protected $persistenceManager;
 
+    /**
+     * @var NewsRepository
+     */
+    protected $newsRepository = null;
+
     public function __construct(NewsRepository $newsRepository, PersistenceManager $persistenceManager)
     {
         $this->newsRepository = $newsRepository;
