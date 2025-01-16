@@ -43,6 +43,11 @@ class AbstractImportService
      */
     protected $newsRepository = null;
 
+    /**
+     * @var mixed
+     */
+    protected $emConfiguration = null;
+
     public function __construct(NewsRepository $newsRepository, PersistenceManager $persistenceManager)
     {
         $this->newsRepository = $newsRepository;
