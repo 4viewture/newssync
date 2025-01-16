@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784
 {
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'SimplePie\\' => 10,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'SimplePie\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
+        ),
+    );
+
     public static $prefixesPsr0 = array (
         'S' => 
         array (
@@ -16,10 +30,17 @@ class ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5eedbda2ee4b108f1bef6ec5a472b784::$classMap;
 
         }, null, ClassLoader::class);
     }

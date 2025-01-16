@@ -1,10 +1,10 @@
 {
-  "name": "Fourviewture/newssync",
+  "name": "fourviewture/newssync",
   "type": "typo3-cms-extension",
   "description": "Imports news automatically",
   "homepage": "https://www.4viewture.de",
   "license": ["GPL-2.0+"],
   "require": {
-    "simplepie/simplepie": "^1.4"
+    "simplepie/simplepie": "^1.8.1"
   }
 }
