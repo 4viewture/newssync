@@ -10,6 +10,7 @@ use GeorgRinger\News\Domain\Model\NewsDefault;
 use GeorgRinger\News\Domain\Repository\NewsRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
@@ -88,6 +89,20 @@ class AbstractImportService
     {
         return implode(chr(10), $this->output);
     }
+
+    protected function getCacheDir(SyncConfiguration $syncConfiguration = null): string
+    {
+        $subFolder = 'default';
+        if ($syncConfiguration !== null) {
+            $subFolder = $syncConfiguration->getUid();
+        }
+
+        $cacheDir = Environment::getVarPath() . '/cache/newssync/' . $subFolder . '/';
+        GeneralUtility::mkdir_deep($cacheDir);
+
+        return $cacheDir;
+    }
+
     /**
      * @param int $uid of storage folder
      */

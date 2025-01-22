@@ -27,23 +27,27 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class RssImportService extends AbstractImportService
 {
     public const IMPORT_ID = 'newssync_rssimport';
-    private const CACHE_DIRECTORY = 'typo3temp/Cache/Data/newssync/SimplePie';
+
     /**
      * @var NewsRepository
      */
     protected $newsRepository;
+
     /**
      * @var ObjectManager
      */
     protected $objectManager;
+
     /**
      * @var PersistenceManager
      */
     protected $persistenceManager;
+
     /**
      * @var array
      */
     protected $emConfiguration = array();
+
     /**
      * RssImportService constructor.
      * @param NewsRepository $newsRepository
@@ -73,6 +77,7 @@ class RssImportService extends AbstractImportService
             return true;
         }
     }
+
     /**
      * @param SyncConfiguration $syncConfiguration
      * @throws IllegalObjectTypeException
@@ -82,13 +87,15 @@ class RssImportService extends AbstractImportService
     public function handle(SyncConfiguration $syncConfiguration)
     {
         parent::handle($syncConfiguration);
-        GeneralUtility::mkdir_deep(self::CACHE_DIRECTORY);
+
+        $cacheDir = $this->getCacheDir($syncConfiguration);
+
         $simplePie = new \SimplePie();
-        $simplePie->set_cache_location(self::CACHE_DIRECTORY);
+        $simplePie->set_cache_location($cacheDir);
         $simplePie->set_cache_duration($this->emConfiguration['simplePieCacheRssTime']);
         $simplePie->set_feed_url($syncConfiguration->getUri());
         $this->log('  URL:   ' . $syncConfiguration->getUri());
-        $this->log('  Cache: ' . Environment::getPublicPath() . '/' . static::CACHE_DIRECTORY);
+        $this->log('  Cache: ' . $cacheDir);
         $this->log('  Cache: ' . $this->emConfiguration['simplePieCacheRssTime']);
         $simplePie->init();
         $items = $simplePie->get_items();
