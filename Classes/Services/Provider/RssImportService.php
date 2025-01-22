@@ -108,7 +108,7 @@ class RssImportService extends AbstractImportService
             $news->setDescription($item->get_description());
             $news->setTeaser($item->get_description());
             $news->setBodytext($item->get_content());
-            $news->setDatetime(new \DateTime($item->get_date()));
+            $news->setDatetime(new \DateTime($item->get_date() ?? 'now'));
             if ($this->persistenceManager->isNewObject($news)) {
                 if ($item->get_enclosure(0) !== null) {
                     $this->log('    enclosure found');
