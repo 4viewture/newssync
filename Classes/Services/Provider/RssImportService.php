@@ -116,7 +116,12 @@ class RssImportService extends AbstractImportService
                     if ($enclosure->get_link() !== null && $enclosure->get_link() !== '//?#') {
                         $this->log('      uri :' . $enclosure->get_link());
                         $enclosure = $item->get_enclosure(0);
-                        $this->addFalMediaByUri($syncConfiguration, $news, $enclosure->get_link());
+                        try {
+                            $this->addFalMediaByUri($syncConfiguration, $news, $enclosure->get_link());
+                        } catch (\Exception $e) {
+                            $this->log('      skipped because problem importing from URL: ' . $enclosure->get_link());
+                        }
+
                     } else {
                         $this->log('      skipped because of invalid uri ... ' . $enclosure->get_link());
                     }

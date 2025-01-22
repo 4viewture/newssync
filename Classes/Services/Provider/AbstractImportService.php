@@ -235,6 +235,13 @@ class AbstractImportService
             }
         }
 
+        if ($tmpFileName === null) {
+            throw new \Exception('No tmp file found for: ' . $uri);
+        }
+        if (!is_file($tmpFileName) || !is_readable($tmpFileName)) {
+            throw new \Exception('Tmp file not readable for: ' . $uri);
+        }
+
         $newFile = $storage->addFile(
             $tmpFileName,
             $folder,
