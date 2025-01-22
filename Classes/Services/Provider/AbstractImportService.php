@@ -242,10 +242,19 @@ class AbstractImportService
             throw new \Exception('Tmp file not readable for: ' . $uri);
         }
 
-        $newFile = $storage->addFile(
-            $tmpFileName,
-            $folder,
-            'newssync-' . hash('crc32b', $uri) . '-' . $filename
+        $targetFileName = 'newssync-' . hash('crc32b', $uri) . '-' . $filename;
+
+        $file = $storage->createFile(
+            $targetFileName,
+            $folder
+        );
+
+        if ($file === null) {
+            throw new \Exception('Could not create file for: ' . $uri . ' please check the processing folder');
+        }
+
+        $file->setContents(
+            file_get_contents($tmpFileName)
         );
 
         if ($newFile->getExtension() === '') {
