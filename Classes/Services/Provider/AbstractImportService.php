@@ -257,18 +257,18 @@ class AbstractImportService
             file_get_contents($tmpFileName)
         );
 
-        if ($newFile->getExtension() === '') {
-            list($type, $extension) = explode('/', $newFile->getMimeType(), 2);
-            $newFile->rename($filename . '.' . $extension);
+        if ($file->getExtension() === '') {
+            list($type, $extension) = explode('/', $file->getMimeType(), 2);
+            $file->rename($filename . '.' . $extension);
         }
 
-        $this->log('      created file:  ' . $newFile->getCombinedIdentifier());
+        $this->log('      created file:  ' . $file->getCombinedIdentifier());
 
         if (file_exists($tmpFileName)) {
             unlink($tmpFileName);
         }
 
-        return $newFile;
+        return $file;
     }
 
     protected function generateSlug(int $uid, string $tableName = 'tx_news_domain_model_news', string $slugFieldName = 'path_segment'): string
