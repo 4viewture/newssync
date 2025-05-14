@@ -11,7 +11,7 @@ return [
         'workspaces' => 'live',
         'path' => '/module/newssync',
         'labels' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_sync.xlf',
-        'extensionName' => 'Newssync',
+        'extensionName' => 'newssync',
         'icon' => 'EXT:newssync/Resources/Public/Icons/module_syncconfiguration.svg',
         'controllerActions' => [
             \Fourviewture\Newssync\Controller\SyncConfigurationController::class => [

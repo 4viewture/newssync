@@ -39,29 +39,29 @@ class Page extends AbstractEntity
      *
      * @var int
      */
-    protected $uid = null;
-    
+    protected ?int $uid = null;
+
     /**
      * pid
      *
      * @var int
      */
-    protected $pid = null;
-    
+    protected ?int $pid = null;
+
     /**
      * title
      *
      * @var string
      */
-    protected $navTitle = null;
-    
+    protected ?string $navTitle = null;
+
     /**
      * Doktype
      *
      * @var string
      */
     protected $doktype = null;
-    
+
     /**
      * @return string
      */
@@ -69,7 +69,7 @@ class Page extends AbstractEntity
     {
         return $this->navTitle;
     }
-    
+
     /**
      * @param string $navTitle
      */
@@ -77,7 +77,7 @@ class Page extends AbstractEntity
     {
         $this->navTitle = $navTitle;
     }
-    
+
     /**
      * Returns the uid
      *
@@ -87,7 +87,7 @@ class Page extends AbstractEntity
     {
         return $this->uid;
     }
-    
+
     /**
      * Returns the pid
      *
@@ -97,7 +97,7 @@ class Page extends AbstractEntity
     {
         return $this->pid;
     }
-    
+
     /**
      * @return string
      */
@@ -105,7 +105,7 @@ class Page extends AbstractEntity
     {
         return $this->doktype;
     }
-    
+
     /**
      * @param string $doktype
      */

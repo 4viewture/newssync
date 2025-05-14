@@ -2,7 +2,7 @@
 namespace Fourviewture\Newssync\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Backend\Attribute\Controller;
+use \TYPO3\CMS\Backend\Attribute\AsController;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use Fourviewture\Newssync\Domain\Repository\SyncConfigurationRepository;
 use Fourviewture\Newssync\Services\ImportService;
@@ -43,7 +43,7 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  * SyncConfigurationController
  */
 
-#[Controller]
+#[AsController]
 class SyncConfigurationController extends ActionController
 {
     protected ?SyncConfigurationRepository $syncConfigurationRepository = null;
@@ -70,13 +70,12 @@ class SyncConfigurationController extends ActionController
 
     public function listAction(): ResponseInterface
     {
-        $synConfigurations = $this->syncConfigurationRepository->findAllIncludingDisabled();
-        $this->view->assign('syncConfigurations', $synConfigurations);
-
+        $syncConfigurations = $this->syncConfigurationRepository->findAllIncludingDisabled();
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assign('syncConfigurations', $syncConfigurations);
+        $moduleTemplate->assign('content', $this->view->render());
+        return $this->htmlResponse($moduleTemplate->render('SyncConfiguration/List'));
     }
     /**
      * action show
@@ -87,13 +86,11 @@ class SyncConfigurationController extends ActionController
     public function showAction(int $sync_preview): ResponseInterface
     {
         $syncConfiguration = $this->syncConfigurationRepository->findOneIncludingDeletedByUid($sync_preview);
-
-        $this->view->assign('syncConfiguration', $syncConfiguration);
-
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $moduleTemplate->assign('syncConfiguration', $syncConfiguration);
+        $moduleTemplate->assign('content', $this->view->render());
+        return $this->htmlResponse($moduleTemplate->render('SyncConfiguration/Show'));
     }
     /**
      * action refreshData
