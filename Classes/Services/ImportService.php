@@ -35,7 +35,7 @@ class ImportService
     {
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['newssync']['importservices'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['newssync']['importservices'] as $service) {
-                $this->services[] = GeneralUtility::makeInstance(
+                $this->services[] = GeneralUtility::makeInstanceForDi(
                     $service,
                     GeneralUtility::makeInstance(\GeorgRinger\News\Domain\Repository\NewsRepository::class),
                     GeneralUtility::makeInstance(PersistenceManager::class)

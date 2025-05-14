@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -49,10 +50,32 @@ class AbstractImportService
      */
     protected $emConfiguration = null;
 
-    public function __construct(NewsRepository $newsRepository, PersistenceManager $persistenceManager)
+    /**
+     * @var ConnectionPool
+     */
+    protected $connectionPool;
+
+    /**
+     * @var StorageRepository
+     */
+    protected $storageRepository;
+
+    public function __construct(
+        NewsRepository $newsRepository,
+        PersistenceManager $persistenceManager,
+        ConnectionPool $connectionPool = null,
+        StorageRepository $storageRepository = null
+    )
     {
         $this->newsRepository = $newsRepository;
         $this->persistenceManager = $persistenceManager;
+        if ($connectionPool === null) {
+            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        }
+        if ($storageRepository === null) {
+            $this->storageRepository = GeneralUtility::makeInstance(StorageRepository::class);
+        }
+        $this->connectionPool = $connectionPool;
         /** @var ExtensionConfiguration $configurationUtility */
         $configurationUtility = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->emConfiguration = $configurationUtility->get('newssync');
@@ -227,7 +250,7 @@ class AbstractImportService
         $storage = $resourceFactory->getDefaultStorage();
         $folder = $storage->getDefaultFolder();
         if ($syncConfiguration->getProcessingfolder() !== '') {
-            $storage = $resourceFactory->getStorageObjectFromCombinedIdentifier($syncConfiguration->getProcessingfolder());
+            $storage = $this->storageRepository->findByCombinedIdentifier($syncConfiguration->getProcessingfolder());
             $folder = $resourceFactory->getObjectFromCombinedIdentifier($syncConfiguration->getProcessingfolder());
             if (!$folder instanceof Folder) {
                 $this->log('      Problem using ' . $syncConfiguration->getProcessingfolder() . ' as storage folder');
@@ -280,8 +303,8 @@ class AbstractImportService
             ->select('*')
             ->from($tableName)
             ->where($queryBuilder->expr()->eq('uid', $uid))
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
 
         $helper = GeneralUtility::makeInstance(
             SlugHelper::class,
@@ -301,7 +324,7 @@ class AbstractImportService
                 $queryBuilder->expr()->eq('uid', $uid)
             )
             ->set($slugFieldName, $value)
-            ->execute();
+            ->executeQuery();
         return $value;
     }
 
