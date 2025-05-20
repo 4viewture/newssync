@@ -37,23 +37,23 @@ class Page extends AbstractEntity
     /**
      * uid
      *
-     * @var int
+     * @var int|null
      */
-    protected ?int $uid = null;
+    protected $uid = null;
 
     /**
      * pid
      *
-     * @var int
+     * @var int|null
      */
-    protected ?int $pid = null;
+    protected $pid = null;
 
     /**
      * title
      *
      * @var string
      */
-    protected ?string $navTitle = null;
+    protected $navTitle = null;
 
     /**
      * Doktype
