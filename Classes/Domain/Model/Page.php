@@ -33,21 +33,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Page extends AbstractEntity
 {
-
-    /**
-     * uid
-     *
-     * @var int|null
-     */
-    protected $uid = null;
-
-    /**
-     * pid
-     *
-     * @var int|null
-     */
-    protected $pid = null;
-
     /**
      * title
      *
