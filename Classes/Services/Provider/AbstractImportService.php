@@ -63,8 +63,8 @@ class AbstractImportService
     public function __construct(
         NewsRepository $newsRepository,
         PersistenceManager $persistenceManager,
-        ConnectionPool $connectionPool = null,
-        StorageRepository $storageRepository = null
+        ?ConnectionPool $connectionPool = null,
+        ?StorageRepository $storageRepository = null
     )
     {
         $this->newsRepository = $newsRepository;
@@ -113,7 +113,7 @@ class AbstractImportService
         return implode(chr(10), $this->output);
     }
 
-    protected function getCacheDir(SyncConfiguration $syncConfiguration = null): string
+    protected function getCacheDir(?SyncConfiguration $syncConfiguration = null): string
     {
         $subFolder = 'default';
         if ($syncConfiguration !== null) {
@@ -178,7 +178,7 @@ class AbstractImportService
         $news->addFalMedia($fileReference);
     }
 
-    protected function addDownloadFilesByUri(SyncConfiguration $syncConfiguration, News $news, string $uri, string $forceFileName = null): void
+    protected function addDownloadFilesByUri(SyncConfiguration $syncConfiguration, News $news, string $uri, ?string $forceFileName = null): void
     {
         $newFile = $this->getFileByContent($syncConfiguration, $uri, $forceFileName);
 
@@ -219,7 +219,7 @@ class AbstractImportService
         $news->addRelatedLink($link);
     }
 
-    protected function getFileByContent(SyncConfiguration $syncConfiguration, string $uri, string $forcedFileName = null)
+    protected function getFileByContent(SyncConfiguration $syncConfiguration, string $uri, ?string $forcedFileName = null)
     {
         $tmpFileName = GeneralUtility::tempnam(static::IMPORT_ID);
         file_put_contents($tmpFileName, GeneralUtility::getUrl($uri));
