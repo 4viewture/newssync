@@ -93,7 +93,7 @@ return [
         'uri' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.uri',
-            'config' => ['type' => 'input', 'size' => 30, 'eval' => 'trim']
+            'config' => ['type' => 'link', 'size' => 30, 'eval' => 'trim', 'allowedTypes' => ['url', 'file'],]
         ],
         'description' => [
             'exclude' => 1,
