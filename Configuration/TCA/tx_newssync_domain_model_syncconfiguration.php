@@ -17,7 +17,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,processingfolder,storage_pid,description,--div--;News,news_type,news_is_hidden_after_import,news_is_top_news,categories,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime'
+            'showitem' => 'sys_language_uid,--palette--,l10n_parent,l10n_diffsource,hidden,title,uri,provider,processingfolder,storage_pid,description,--div--;News,news_type,news_is_hidden_after_import,news_is_top_news,categories,--div--;Cache,auto_clear_cache_for_plugin,clear_cache_pages,--div--;Sync Log,lastsync,lastsynclog,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime'
         ]
     ],
     'palettes' => ['1' => ['showitem' => 'processingfolder,']],
@@ -84,6 +84,22 @@ return [
                 'range' => ['lower' => \mktime(0, 0, 0, \date('m'), \date('d'), \date('Y'))],
                 'behaviour' => ['allowLanguageSynchronization' => \true]
             ]
+        ],
+        'provider' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.provider',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        'label' => 'Automatic detection',
+                        'value' => 'auto',
+                        'icon' => 'actions-selection'
+                    ],
+                ],
+                'itemsProcFunc' => \Fourviewture\Newssync\TCA\ProviderItemsProcFunc::class . '->itemsProcFunc',
+            ],
         ],
         'title' => [
             'exclude' => 1,

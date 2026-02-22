@@ -7,6 +7,7 @@ CREATE TABLE tx_newssync_domain_model_syncconfiguration (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	title varchar(255) DEFAULT '' NOT NULL,
+	provider varchar(2048) DEFAULT '' NOT NULL,
 	uri varchar(2048) DEFAULT '' NOT NULL,
 	description text NOT NULL,
 	processingfolder varchar(255) DEFAULT '' NOT NULL,
