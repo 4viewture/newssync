@@ -169,29 +169,19 @@ return [
             'exclude' => 1,
             'label' => 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.clear_cache_pages',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'pages',
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'pages',
                 'MM' => 'tx_newssync_syncconfiguration_clearcachepages_page_mm',
-                'size' => 10,
-                'autoSizeMax' => 30,
+                'size' => 5,
+                'autoSizeMax' => 20,
                 'maxitems' => 9999,
-                'multiple' => 0,
-                'fieldControl' => [
-                    'addRecord' => [
-                        'options' => [
-                            'pid' => '###CURRENT_PID###',
-                            'setValue' => 'prepend',
-                            'table' => 'pages',
-                            'title' => 'Create new'
-                        ]
+                'suggestOptions' => [
+                    'default' => [
+                        'additionalSearchFields' => 'nav_title,url',
                     ],
-                    'editPopup' => [
-                        'title' => 'Edit',
-                        'windowOpenParameters' => 'height=350,width=580,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
-            ]
+                ],
+            ],
         ],
         'categories' => [
             'config' => [
