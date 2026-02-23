@@ -53,7 +53,7 @@ class ImportService
     public function import(SyncConfiguration &$syncConfiguration): void
     {
         if (count($this->services) === 0) {
-            $syncConfiguration->setLastsynclog('No Importservices defined (' . count($this->services) . ')');
+            $syncConfiguration->setLastsynclog('No import providers defined (' . count($this->services) . ')');
         }
 
         $syncConfiguration->setLastsync(new \DateTime('now'));
@@ -66,20 +66,29 @@ class ImportService
         } catch (SyncException $e) {
             $syncConfiguration->setLastsynclog($e->getMessage());
         }
-
-        if (!$handled) {
-            $syncConfiguration->setLastsynclog('No Matching service found');
-        }
     }
 
     protected function getMatchingService(SyncConfiguration $syncConfiguration): AbstractImportService
     {
+        if ($syncConfiguration->getProvider() !== 'auto') {
+            foreach ($this->services as $service) {
+                if (get_class($service) === $syncConfiguration->getProvider()) {
+                    if ($service->canHandle($syncConfiguration)) {
+                        return $service;
+                    }
+                    throw new SyncException('Provider ' . get_class($service) .  'can not handle this configuration, but is selected as provider, you might switch to auto?');
+                }
+            }
+
+            throw new SyncException('No Matching provider found');
+        }
+
         foreach ($this->services as $service) {
             if ($service->canHandle($syncConfiguration)) {
                 return $service;
             }
         }
 
-        throw new SyncException('No Matching service found');
+        throw new SyncException('No matching provider found');
     }
 }

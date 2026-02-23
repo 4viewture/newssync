@@ -122,6 +122,11 @@ class SyncConfiguration extends AbstractEntity
     protected $newsType = 0;
 
     /**
+     * @var string
+     */
+    protected $provider = 'auto';
+
+    /**
      * Returns the title
      *
      * @return string $title
@@ -468,5 +473,16 @@ class SyncConfiguration extends AbstractEntity
     public function setNewsType(int $newsType): void
     {
         $this->newsType = $newsType;
+    }
+
+    public function getProvider(): string
+    {
+        return $this->provider;
+    }
+
+    public function setProvider(string $provider): SyncConfiguration
+    {
+        $this->provider = $provider;
+        return $this;
     }
 }
