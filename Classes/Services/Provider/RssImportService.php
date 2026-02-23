@@ -5,6 +5,8 @@ namespace Fourviewture\Newssync\Services\Provider;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use Fourviewture\Newssync\Services\Exception\OfflineException;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
@@ -55,13 +57,15 @@ class RssImportService extends AbstractImportService
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      * @throws ExtensionConfigurationPathDoesNotExistException
      */
-    public function __construct(NewsRepository $newsRepository, PersistenceManager $persistenceManager)
+    public function __construct(
+        NewsRepository $newsRepository,
+        PersistenceManager $persistenceManager,
+        ?ConnectionPool $connectionPool = null,
+        ?StorageRepository $storageRepository = null
+    )
     {
-        $this->newsRepository = $newsRepository;
-        $this->persistenceManager = $persistenceManager;
-        /** @var ExtensionConfiguration $configurationUtility */
-        $configurationUtility = GeneralUtility::makeInstance(ExtensionConfiguration::class);
-        $this->emConfiguration = $configurationUtility->get('newssync');
+        parent::__construct($newsRepository, $persistenceManager, $connectionPool, $storageRepository);
+
         if (!class_exists('SimplePie')) {
             require_once ExtensionManagementUtility::extPath('newssync') . 'Resources/Private/PHP/vendor/autoload.php';
         }
@@ -71,11 +75,16 @@ class RssImportService extends AbstractImportService
      * @return bool
      * @throws OfflineException
      */
-    public function canHandle(SyncConfiguration $syncConfiguration)
+    public function canHandle(SyncConfiguration $syncConfiguration): bool
     {
+        if (!str_starts_with($syncConfiguration->getUri(), 'http://') &&  !str_starts_with($syncConfiguration->getUri(),
+                'https://')) {
+            return false;
+        }
         if (strpos($syncConfiguration->getDataFromUri(), '<rss ')) {
             return true;
         }
+        return false;
     }
 
     /**
@@ -84,7 +93,7 @@ class RssImportService extends AbstractImportService
      * @throws UnknownObjectException
      * @throws ExistingTargetFileNameException
      */
-    public function handle(SyncConfiguration $syncConfiguration)
+    public function handle(SyncConfiguration $syncConfiguration): void
     {
         parent::handle($syncConfiguration);
 

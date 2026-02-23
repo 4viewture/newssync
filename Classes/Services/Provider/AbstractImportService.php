@@ -15,6 +15,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
@@ -25,7 +27,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Service\CacheService;
 
-class AbstractImportService
+class AbstractImportService implements ImportServiceInterface
 {
     public const IMPORT_ID = 'newssync_unknown';
     public const PRIORITY = 0;
@@ -69,31 +71,55 @@ class AbstractImportService
     {
         $this->newsRepository = $newsRepository;
         $this->persistenceManager = $persistenceManager;
-        if ($connectionPool === null) {
-            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+
+        $this->connectionPool = $connectionPool;
+        if ($this->connectionPool === null) {
+            $this->connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         }
-        if ($storageRepository === null) {
+
+        $this->storageRepository = $storageRepository;
+        if ($this->storageRepository === null) {
             $this->storageRepository = GeneralUtility::makeInstance(StorageRepository::class);
         }
-        $this->connectionPool = $connectionPool;
+
         /** @var ExtensionConfiguration $configurationUtility */
         $configurationUtility = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->emConfiguration = $configurationUtility->get('newssync');
     }
 
+    protected function getLLLString(): string
+    {
+        return 'LLL:EXT:newssync/Resources/Private/Language/locallang_db.xlf:tx_newssync_domain_model_syncconfiguration.provider.' . str_replace('\\', '_', get_class($this));
+    }
+
+    /**
+     * We do the translation here, so we can append stuff in the itemProc.
+     * @return string
+     */
+    public function getLabelForTca(): string
+    {
+        /** @var LanguageService $languageService */
+        $languageService = GeneralUtility::makeInstance(LanguageServiceFactory::class)
+            ->createFromUserPreferences($GLOBALS['BE_USER']);
+        $translation = $languageService->sL($this->getLLLString());
+        if ($translation === '') {
+            return get_class($this);
+        }
+        return $translation;
+    }
 
     /**
      * @param SyncConfiguration $syncConfiguration
      * @return boolean
      */
-    public function canHandle(SyncConfiguration $syncConfiguration)
+    public function canHandle(SyncConfiguration $syncConfiguration): bool
     {
         return false;
     }
     /**
      * @param SyncConfiguration $syncConfiguration
      */
-    public function handle(SyncConfiguration $syncConfiguration)
+    public function handle(SyncConfiguration $syncConfiguration): void
     {
         $this->output = array();
         $this->log('Importing with ' . get_class($this));
@@ -108,7 +134,7 @@ class AbstractImportService
     /**
      * @return string
      */
-    public function getLog()
+    public function getLog(): string
     {
         return implode(chr(10), $this->output);
     }

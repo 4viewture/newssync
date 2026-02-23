@@ -5,6 +5,7 @@ namespace Fourviewture\Newssync\Services;
 use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use Fourviewture\Newssync\Services\Exception\SyncException;
 use Fourviewture\Newssync\Services\Provider\AbstractImportService;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -38,7 +39,9 @@ class ImportService
                 $this->services[] = GeneralUtility::makeInstanceForDi(
                     $service,
                     GeneralUtility::makeInstance(\GeorgRinger\News\Domain\Repository\NewsRepository::class),
-                    GeneralUtility::makeInstance(PersistenceManager::class)
+                    GeneralUtility::makeInstance(PersistenceManager::class),
+                    GeneralUtility::makeInstance(ConnectionPool::class),
+                    GeneralUtility::makeInstance(StorageRepository::class)
                 );
             }
         }

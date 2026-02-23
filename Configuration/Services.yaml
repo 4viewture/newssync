@@ -8,6 +8,12 @@ services:
   Fourviewture\Newssync\:
     resource: '../Classes/*'
 
+  Fourviewture\Newssync\Services\Provider\:
+    resource: '../Classes/Services/Provider/*'
+    autowire: true
+    autoconfigure: true
+    public: true
+
   Fourviewture\Newssync\Command\SyncAllCommandController:
     tags:
       - name: 'console.command'

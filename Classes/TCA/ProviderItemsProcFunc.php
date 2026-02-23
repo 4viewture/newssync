@@ -29,16 +29,26 @@ class ProviderItemsProcFunc
 
         foreach ($entries as $entry) {
             $label = $entry;
+            $canHandle = false;
             // check if the class can provide a translation label with interface
 
+            try {
+                /** @var AbstractImportService $obj */
+                $obj = GeneralUtility::makeInstance($entry);
+                $label = $obj->getLabelForTca();
 
-            /** @var AbstractImportService $obj */
-            #$obj = GeneralUtility::makeInstance($entry);
-            #$canHandle = $obj->canHandle($config) ?? false;
-            $canHandle = false;
+                $canHandle = $obj->canHandle($config) ?? false;
+            } catch (\Exception $e) {
+                $label .= ' - ❌️ ' . $e->getMessage();
+                $canHandle = false;
+            }
+
+            if (!$canHandle) {
+                $label = '⚠ ' . $label;
+            }
 
             $params['items'][] = [
-                'label' => $entry,
+                'label' => $label,
                 'value' => $entry,
                 'icon' => $canHandle ? 'status-dialog-ok' : 'status-dialog-error',
             ];

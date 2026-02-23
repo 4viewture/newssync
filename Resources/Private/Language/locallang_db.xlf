@@ -45,6 +45,12 @@
 			<trans-unit id="pages.tx_extbase_type.Tx_Newssync_Page">
 				<source>Newssync Page</source>
 			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.provider.Fourviewture_Newssync_Services_Provider_RssImportService">
+				<source>EXT:newssync: RSS</source>
+			</trans-unit>
+			<trans-unit id="tx_newssync_domain_model_syncconfiguration.provider.Fourviewture_Newssync_Services_Provider_JsonImportService">
+				<source>EXT:newssync: JSON</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
