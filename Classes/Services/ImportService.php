@@ -6,6 +6,7 @@ use Fourviewture\Newssync\Domain\Model\SyncConfiguration;
 use Fourviewture\Newssync\Services\Exception\SyncException;
 use Fourviewture\Newssync\Services\Provider\AbstractImportService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -58,20 +59,27 @@ class ImportService
         $syncConfiguration->setLastsync(new \DateTime('now'));
         /** @var AbstractImportService $service */
         $handled = false;
-        foreach ($this->services as $service) {
-            try {
-                if ($service->canHandle($syncConfiguration)) {
-                    $service->handle($syncConfiguration);
-                    $syncConfiguration->setLastsynclog($service->getLog());
-                    $handled = true;
-                    break;
-                }
-            } catch (SyncException $exception) {
-                $syncConfiguration->setLastsynclog($exception->getMessage());
-            }
+        try {
+            $service = $this->getMatchingService($syncConfiguration);
+            $service->handle($syncConfiguration);
+            $syncConfiguration->setLastsynclog($service->getLog());
+        } catch (SyncException $e) {
+            $syncConfiguration->setLastsynclog($e->getMessage());
         }
+
         if (!$handled) {
             $syncConfiguration->setLastsynclog('No Matching service found');
         }
+    }
+
+    protected function getMatchingService(SyncConfiguration $syncConfiguration): AbstractImportService
+    {
+        foreach ($this->services as $service) {
+            if ($service->canHandle($syncConfiguration)) {
+                return $service;
+            }
+        }
+
+        throw new SyncException('No Matching service found');
     }
 }
