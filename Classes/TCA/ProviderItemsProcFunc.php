@@ -19,12 +19,12 @@ class ProviderItemsProcFunc
      * @param array $row
      * @return void
      */
-    public static function itemsProcFunc(array &$params, TcaSelectItems $config): void
+    public static function itemsProcFunc(array &$params): void
     {
         $entries = $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['newssync']['importservices'];
 
         $config = new SyncConfiguration();
-        $config->setUri($params['row']['uri']);
+        $config->setUri($params['row']['uri'] ?? '');
 
 
         foreach ($entries as $entry) {
