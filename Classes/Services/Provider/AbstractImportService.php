@@ -354,7 +354,7 @@ class AbstractImportService implements ImportServiceInterface
         return $value;
     }
 
-    protected function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): News
+    public function prepareNews(SyncConfiguration $syncConfiguration, string $syncKey, string $title): News
     {
         $news = $this->newsRepository->findOneByImportSourceAndImportId(static::IMPORT_ID, $syncKey);
 
